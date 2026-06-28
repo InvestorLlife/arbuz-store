@@ -1,0 +1,3533 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arbuz Store — Цифровий Гаджет-Простір</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --neon: #0177ed;
+    --neon-glow: 0 0 12px #0177ed, 0 0 30px #0177ed55;
+    --neon-glow-strong: 0 0 16px #0177ed, 0 0 50px #0177ed88, 0 0 80px #0177ed33;
+    --bg: #000000;
+    --bg2: #0b0b0b;
+    --text: #e0e0e0;
+    --white: #ffffff;
+    --card-bg: rgba(255,255,255,0.03);
+    --border: rgba(1,119,237,0.35);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* GRAIN OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.5;
+  }
+
+  /* HEADER */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(0,0,0,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 3%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+    gap: 1.5rem;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-shrink: 0;
+  }
+
+  .logo {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-icon {
+    width: 34px;
+    height: 34px;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    box-shadow: 0 0 12px rgba(231,76,60,0.5);
+  }
+
+  nav {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  nav a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: color 0.2s, text-shadow 0.2s;
+  }
+
+  nav a:hover {
+    color: var(--neon);
+    text-shadow: var(--neon-glow);
+  }
+
+  .nav-cta {
+    background: var(--neon);
+    color: var(--white) !important;
+    padding: 8px 18px;
+    border-radius: 4px;
+    box-shadow: var(--neon-glow);
+    transition: box-shadow 0.2s !important;
+  }
+
+  .nav-cta:hover {
+    box-shadow: var(--neon-glow-strong) !important;
+    color: var(--white) !important;
+    text-shadow: none !important;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 92vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(1,119,237,0.08) 0%, transparent 70%);
+    padding: 6rem 5% 4rem;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--neon), transparent);
+    box-shadow: var(--neon-glow);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 4rem;
+    max-width: 1200px;
+    width: 100%;
+  }
+
+  .hero-left {}
+
+  .hero-tags {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.8rem;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--neon);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: 2px;
+    background: rgba(1,119,237,0.06);
+  }
+
+  .hero-title {
+    font-size: clamp(2.8rem, 5.5vw, 5rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+
+  .hero-title .neon-line {
+    display: block;
+    color: var(--neon);
+    text-shadow: var(--neon-glow);
+    letter-spacing: 0.05em;
+  }
+
+  .hero-sub {
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    color: rgba(224,224,224,0.55);
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--neon);
+    color: var(--white);
+    text-decoration: none;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 16px 38px;
+    border: none;
+    cursor: pointer;
+    box-shadow: var(--neon-glow);
+    transition: box-shadow 0.25s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.12), transparent);
+  }
+
+  .btn-primary:hover {
+    box-shadow: var(--neon-glow-strong);
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    display: inline-block;
+    background: transparent;
+    color: var(--neon);
+    text-decoration: none;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 13px 28px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--neon);
+    box-shadow: var(--neon-glow);
+    background: rgba(1,119,237,0.06);
+  }
+
+  .hero-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .phone-showcase {
+    position: relative;
+    width: 280px;
+    height: 500px;
+  }
+
+  .phone-main {
+    width: 220px;
+    height: 440px;
+    background: linear-gradient(145deg, #1a1a2e, #16213e, #0f3460);
+    border-radius: 40px;
+    border: 2px solid rgba(1,119,237,0.5);
+    box-shadow: var(--neon-glow-strong), inset 0 0 40px rgba(1,119,237,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    margin: auto;
+  }
+
+  .phone-main::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 10px;
+    background: #111;
+    border-radius: 10px;
+  }
+
+  .phone-screen-content {
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .phone-screen-content .apple-logo {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 0 10px rgba(1,119,237,0.7));
+  }
+
+  .phone-screen-content p {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: rgba(1,119,237,0.8);
+    text-transform: uppercase;
+  }
+
+  .floating-badge {
+    position: absolute;
+    background: rgba(0,0,0,0.9);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--neon);
+    box-shadow: var(--neon-glow);
+    white-space: nowrap;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .badge-1 { top: 30px; right: -10px; animation-delay: 0s; }
+  .badge-2 { bottom: 60px; left: -20px; animation-delay: 1.5s; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* PERKS */
+  .perks {
+    padding: 3rem 5%;
+    background: var(--bg2);
+    border-top: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .perks-inner {
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .perk {
+    background: var(--bg2);
+    padding: 2.2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    transition: background 0.2s;
+  }
+
+  .perk:hover { background: rgba(1,119,237,0.04); }
+
+  .perk-icon {
+    width: 52px;
+    height: 52px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    box-shadow: var(--neon-glow);
+    background: rgba(1,119,237,0.06);
+  }
+
+  .perk h4 {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+
+  .perk p {
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    color: rgba(224,224,224,0.45);
+    text-transform: uppercase;
+  }
+
+  /* SECTION HEADER */
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .section-label {
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--neon);
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+
+  .section-title {
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--white);
+    line-height: 1.1;
+  }
+
+  .neon-divider {
+    width: 60px;
+    height: 2px;
+    background: var(--neon);
+    box-shadow: var(--neon-glow);
+    margin: 1.2rem auto 0;
+  }
+
+  /* CATALOG */
+  .catalog {
+    padding: 6rem 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .product-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(1,119,237,0.2);
+    padding: 1.8rem 1.4rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    cursor: pointer;
+    transition: border-color 0.25s, box-shadow 0.25s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at top center, rgba(1,119,237,0.06), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .product-card:hover {
+    border-color: var(--neon);
+    box-shadow: var(--neon-glow);
+    transform: translateY(-4px);
+  }
+
+  .product-card:hover::before { opacity: 1; }
+
+  .card-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 0.52rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    background: var(--neon);
+    color: var(--white);
+    border-radius: 2px;
+  }
+
+  .card-badge.new { background: var(--neon); }
+  .card-badge.hot { background: #e74c3c; }
+
+  .card-img {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    filter: drop-shadow(0 4px 20px rgba(1,119,237,0.3));
+    transition: filter 0.3s;
+  }
+
+  .product-card:hover .card-img {
+    filter: drop-shadow(0 4px 30px rgba(1,119,237,0.6));
+  }
+
+  .card-model {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+
+  .card-tag {
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(224,224,224,0.45);
+    line-height: 1.5;
+  }
+
+  .card-price {
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--neon);
+    text-shadow: 0 0 10px rgba(1,119,237,0.4);
+    margin-top: auto;
+  }
+
+  .card-price span {
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    opacity: 0.7;
+    margin-right: 4px;
+  }
+
+  .card-btn {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--neon);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+    font-family: 'Inter', sans-serif;
+    margin-top: 0.5rem;
+  }
+
+  .card-btn:hover {
+    background: var(--neon);
+    border-color: var(--neon);
+    color: var(--white);
+    box-shadow: var(--neon-glow);
+  }
+
+  /* SERVICES */
+  .services {
+    padding: 5rem 5%;
+    background: var(--bg2);
+    border-top: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .services-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .service-card {
+    background: rgba(1,119,237,0.03);
+    border: 1px solid rgba(1,119,237,0.25);
+    backdrop-filter: blur(20px);
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon), transparent);
+    box-shadow: var(--neon-glow);
+  }
+
+  .service-card:hover {
+    border-color: var(--neon);
+    box-shadow: 0 0 40px rgba(1,119,237,0.12);
+  }
+
+  .service-icon {
+    font-size: 2.2rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .service-label {
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--neon);
+    text-shadow: 0 0 10px rgba(1,119,237,0.4);
+  }
+
+  .service-title {
+    font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--white);
+    line-height: 1.15;
+  }
+
+  .service-desc {
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: rgba(224,224,224,0.5);
+    line-height: 1.7;
+    max-width: 360px;
+  }
+
+  /* WHY US */
+  .why {
+    padding: 6rem 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .why-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 3.5rem 3rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s, box-shadow 0.25s;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .why-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(1,119,237,0.08) 0%, rgba(0,0,0,0.85) 100%);
+    z-index: 1;
+  }
+
+  .why-num {
+    position: absolute;
+    top: 1.5rem;
+    left: 2rem;
+    font-size: 4rem;
+    font-weight: 900;
+    color: rgba(1,119,237,0.08);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    z-index: 0;
+  }
+
+  .why-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .why-card h3 {
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--white);
+    line-height: 1.4;
+  }
+
+  .why-card:hover {
+    border-color: rgba(1,119,237,0.4);
+    box-shadow: 0 0 30px rgba(1,119,237,0.1);
+  }
+
+  .why-accent {
+    display: block;
+    width: 28px;
+    height: 2px;
+    background: var(--neon);
+    box-shadow: var(--neon-glow);
+    margin-bottom: 1rem;
+  }
+
+  /* STATS BAR */
+  .stats {
+    padding: 4rem 5%;
+    background: var(--bg2);
+    border-top: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .stats-inner {
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .stat {
+    background: var(--bg2);
+    padding: 2.5rem;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 900;
+    color: var(--neon);
+    letter-spacing: -0.02em;
+    text-shadow: var(--neon-glow);
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(224,224,224,0.45);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 5rem 5% 3rem;
+    border-top: 1px solid var(--border);
+    position: relative;
+  }
+
+  footer::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--neon), transparent);
+    box-shadow: var(--neon-glow);
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: auto;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--white);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 1.2rem;
+  }
+
+  .footer-tagline {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--neon);
+    text-shadow: 0 0 10px rgba(1,119,237,0.4);
+    margin-bottom: 2.5rem;
+  }
+
+  .footer-socials {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+  }
+
+  .social-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: 1px solid var(--border);
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
+  }
+
+  .social-btn:hover {
+    border-color: var(--neon);
+    box-shadow: var(--neon-glow);
+    background: rgba(1,119,237,0.06);
+    color: var(--neon);
+  }
+
+  .footer-copy {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(224,224,224,0.2);
+  }
+
+  /* ===== SEARCH ===== */
+  .search-wrap {
+    position: relative;
+    flex: 1;
+    max-width: 340px;
+  }
+  .search-input {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(1,119,237,0.3);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    padding: 9px 16px 9px 36px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    border-radius: 2px;
+  }
+  .search-input::placeholder { color: rgba(224,224,224,0.35); letter-spacing: 0.1em; }
+  .search-input:focus { border-color: var(--neon); box-shadow: 0 0 12px rgba(1,119,237,0.25); }
+  .search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(224,224,224,0.4);
+    font-size: 0.85rem;
+    pointer-events: none;
+  }
+  .search-results {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0; right: 0;
+    background: #0f0f0f;
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.8), 0 0 20px rgba(1,119,237,0.1);
+    z-index: 200;
+    max-height: 380px;
+    overflow-y: auto;
+  }
+  .search-results.open { display: block; }
+  .search-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: background 0.15s;
+  }
+  .search-item:hover { background: rgba(1,119,237,0.08); }
+  .search-item-icon { font-size: 1.4rem; width: 32px; text-align: center; flex-shrink: 0; }
+  .search-item-info { flex: 1; min-width: 0; }
+  .search-item-name { font-size: 0.78rem; font-weight: 600; color: var(--white); letter-spacing: 0.04em; }
+  .search-item-tag { font-size: 0.62rem; letter-spacing: 0.08em; color: rgba(224,224,224,0.4); margin-top: 2px; }
+  .search-item-price { font-size: 0.82rem; font-weight: 800; color: var(--neon); flex-shrink: 0; }
+  .search-empty { padding: 1.5rem; text-align: center; font-size: 0.72rem; letter-spacing: 0.12em; color: rgba(224,224,224,0.3); text-transform: uppercase; }
+  .search-highlight { color: var(--neon); }
+
+  /* ===== FILTER BAR ===== */
+  .filter-bar {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+    align-items: center;
+  }
+  .filter-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(224,224,224,0.4);
+    margin-right: 0.4rem;
+  }
+  .filter-btn {
+    background: transparent;
+    border: 1px solid rgba(1,119,237,0.25);
+    color: rgba(224,224,224,0.6);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 2px;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--neon);
+    border-color: var(--neon);
+    color: var(--white);
+    box-shadow: var(--neon-glow);
+  }
+
+  /* ===== CART ===== */
+  .cart-btn-header {
+    position: relative;
+    background: transparent;
+    border: 1px solid rgba(1,119,237,0.35);
+    color: var(--text);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    border-radius: 2px;
+  }
+  .cart-btn-header:hover { border-color: var(--neon); box-shadow: var(--neon-glow); }
+  .cart-count {
+    position: absolute;
+    top: -6px; right: -6px;
+    background: var(--neon);
+    color: var(--white);
+    font-size: 0.55rem;
+    font-weight: 800;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: var(--neon-glow);
+    display: none;
+  }
+  .cart-count.visible { display: flex; }
+
+  /* Cart Drawer */
+  .cart-drawer {
+    position: fixed;
+    top: 0; right: -420px;
+    width: 420px;
+    max-width: 100vw;
+    height: 100vh;
+    background: #0b0b0b;
+    border-left: 1px solid var(--border);
+    z-index: 2000;
+    transition: right 0.35s cubic-bezier(0.22,1,0.36,1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: -8px 0 40px rgba(0,0,0,0.6);
+  }
+  .cart-drawer.open { right: 0; }
+  .cart-drawer::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon), transparent);
+    box-shadow: var(--neon-glow);
+  }
+  .cart-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 1999;
+    backdrop-filter: blur(4px);
+  }
+  .cart-overlay.open { display: block; }
+  .cart-header {
+    padding: 1.8rem 1.5rem 1.2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .cart-title {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+  .cart-close {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--text);
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .cart-close:hover { border-color: var(--neon); color: var(--neon); }
+  .cart-items { flex: 1; overflow-y: auto; padding: 1rem 1.5rem; }
+  .cart-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .cart-item-icon { font-size: 1.8rem; width: 44px; text-align: center; flex-shrink: 0; }
+  .cart-item-info { flex: 1; min-width: 0; }
+  .cart-item-name { font-size: 0.78rem; font-weight: 700; color: var(--white); letter-spacing: 0.04em; }
+  .cart-item-sub { font-size: 0.62rem; letter-spacing: 0.08em; color: rgba(224,224,224,0.4); margin-top: 3px; }
+  .cart-item-price { font-size: 0.9rem; font-weight: 800; color: var(--neon); flex-shrink: 0; }
+  .cart-item-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 7px; }
+  .cart-item-line-total { font-size: 0.62rem; letter-spacing: 0.08em; color: rgba(224,224,224,0.35); text-transform: uppercase; }
+  .cart-qty {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid rgba(1,119,237,0.25);
+    background: rgba(1,119,237,0.04);
+  }
+  .cart-qty button {
+    width: 26px;
+    height: 26px;
+    border: none;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  .cart-qty span {
+    min-width: 24px;
+    text-align: center;
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: var(--white);
+  }
+  .cart-item-del { background: none; border: none; color: rgba(224,224,224,0.25); cursor: pointer; font-size: 1rem; padding: 4px; transition: color 0.2s; }
+  .cart-item-del:hover { color: #e74c3c; }
+  .cart-empty-state { text-align: center; padding: 3rem 1rem; }
+  .cart-empty-state .big-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.3; }
+  .cart-empty-state p { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(224,224,224,0.3); }
+  .cart-footer { padding: 1.2rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); }
+  .cart-total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; }
+  .cart-total-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(224,224,224,0.5); }
+  .cart-total-price { font-size: 1.4rem; font-weight: 900; color: var(--neon); text-shadow: var(--neon-glow); }
+
+  /* ===== ORDER FORM ===== */
+  .order-form { display: flex; flex-direction: column; gap: 10px; }
+  .order-input {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(1,119,237,0.25);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    padding: 12px 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+    border-radius: 2px;
+  }
+  .order-input::placeholder { color: rgba(224,224,224,0.3); }
+  .order-input:focus { border-color: var(--neon); }
+  .order-error {
+    display: none;
+    border: 1px solid rgba(231,76,60,0.45);
+    background: rgba(231,76,60,0.08);
+    color: #ffb4a9;
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+    padding: 10px 12px;
+    text-transform: uppercase;
+  }
+  .order-error.show { display: block; }
+  .order-sending { display: none; text-align: center; padding: 1rem; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--neon); }
+  .order-success { display: none; text-align: center; padding: 1.5rem; }
+  .order-success .success-icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
+  .order-success p { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(224,224,224,0.6); line-height: 1.7; }
+
+  /* ===== STICKY TG BUTTON ===== */
+  .sticky-tg {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--neon);
+    color: var(--white);
+    border: none;
+    padding: 14px 22px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    box-shadow: var(--neon-glow-strong);
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.3s;
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    border-radius: 2px;
+  }
+  .sticky-tg.visible { opacity: 1; transform: translateY(0); pointer-events: all; }
+  .sticky-tg:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(1,119,237,0.8); }
+  .sticky-tg-pulse {
+    width: 8px; height: 8px;
+    background: #fff;
+    border-radius: 50%;
+    animation: tgPulse 1.5s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  @keyframes tgPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.6); opacity: 0.6; }
+  }
+
+  /* ===== REVIEWS ===== */
+  .reviews-section { padding: 5rem 5%; }
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .review-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(1,119,237,0.15);
+    padding: 1.6rem;
+    position: relative;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .review-card:hover { border-color: rgba(1,119,237,0.4); box-shadow: 0 0 20px rgba(1,119,237,0.08); }
+  .review-card::before {
+    content: '"';
+    position: absolute;
+    top: 0.8rem; left: 1rem;
+    font-size: 3.5rem;
+    color: rgba(1,119,237,0.15);
+    line-height: 1;
+    font-weight: 900;
+  }
+  .review-stars { color: #f59e0b; font-size: 0.75rem; letter-spacing: 0.1em; margin-bottom: 0.8rem; }
+  .review-text { font-size: 0.78rem; color: rgba(224,224,224,0.7); line-height: 1.7; margin-bottom: 1.2rem; letter-spacing: 0.03em; }
+  .review-author { display: flex; align-items: center; gap: 10px; }
+  .review-avatar { width: 36px; height: 36px; border-radius: 50%; background: rgba(1,119,237,0.15); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: 700; color: var(--neon); }
+  .review-name { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--white); }
+  .review-date { font-size: 0.6rem; letter-spacing: 0.08em; color: rgba(224,224,224,0.35); margin-top: 2px; }
+  .review-platform { position: absolute; top: 1rem; right: 1rem; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(224,224,224,0.3); }
+  @media (max-width: 768px) { .reviews-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 1024px) { .reviews-grid { grid-template-columns: 1fr 1fr; } }
+
+  /* ===== TRADE-IN CALCULATOR ===== */
+  .tradein-calc {
+    background: rgba(1,119,237,0.04);
+    border: 1px solid rgba(1,119,237,0.2);
+    padding: 2.5rem;
+    margin-top: 2rem;
+  }
+  .tradein-calc::before {
+    content: '';
+    display: block;
+    width: 40px; height: 2px;
+    background: var(--neon);
+    box-shadow: var(--neon-glow);
+    margin-bottom: 1.5rem;
+  }
+  .tradein-select {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(1,119,237,0.25);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    padding: 12px 14px;
+    width: 100%;
+    outline: none;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+  .tradein-select option { background: #111; }
+  .tradein-conditions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; margin-bottom: 1.2rem; }
+  .cond-btn {
+    background: transparent;
+    border: 1px solid rgba(1,119,237,0.2);
+    color: rgba(224,224,224,0.5);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 2px;
+    text-align: center;
+  }
+  .cond-btn.active, .cond-btn:hover { background: rgba(1,119,237,0.1); border-color: var(--neon); color: var(--white); }
+  .tradein-result {
+    display: none;
+    padding: 1.5rem;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--border);
+    text-align: center;
+    margin-top: 1rem;
+    animation: fadeSlideIn 0.3s ease;
+  }
+  .tradein-result.show { display: block; }
+  .tradein-result-price { font-size: 2rem; font-weight: 900; color: var(--neon); text-shadow: var(--neon-glow); letter-spacing: 0.04em; }
+  .tradein-result-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(224,224,224,0.45); margin-top: 0.4rem; }
+
+  /* ===== LANGUAGE SWITCHER ===== */
+  .lang-switcher {
+    display: flex;
+    gap: 2px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(1,119,237,0.2);
+    padding: 3px;
+    border-radius: 2px;
+  }
+  .lang-btn {
+    background: transparent;
+    border: none;
+    color: rgba(224,224,224,0.45);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 1px;
+  }
+  .lang-btn.active {
+    background: var(--neon);
+    color: var(--white);
+    box-shadow: var(--neon-glow);
+  }
+
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* PRODUCT MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    backdrop-filter: blur(20px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .modal-overlay.active { display: flex; }
+
+  .modal {
+    background: #0b0b0b;
+    border: 1px solid var(--border);
+    max-width: 640px;
+    width: 100%;
+    padding: 3rem;
+    position: relative;
+    box-shadow: var(--neon-glow-strong);
+  }
+
+  .modal::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon), transparent);
+    box-shadow: var(--neon-glow);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--text);
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .modal-close:hover { border-color: var(--neon); color: var(--neon); }
+
+  .modal-img {
+    font-size: 5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    filter: drop-shadow(0 0 20px rgba(1,119,237,0.5));
+  }
+
+  .modal-title {
+    font-size: 1.6rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 0.8rem;
+  }
+
+  .modal-desc {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(224,224,224,0.45);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+
+  .config-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--neon);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .config-options {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  .config-opt {
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 18px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.2s, background 0.2s, color 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+  }
+
+  .config-opt .opt-price {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--neon);
+    letter-spacing: 0.06em;
+  }
+
+  .config-opt.active, .config-opt:hover {
+    border-color: var(--neon);
+    background: rgba(1,119,237,0.08);
+    color: var(--white);
+    box-shadow: var(--neon-glow);
+  }
+
+  /* ACCESSORIES SUBSECTIONS */
+  .acc-subsection {
+    margin-bottom: 3.5rem;
+  }
+
+  .acc-subtitle {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .acc-subtitle-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(1,119,237,0.3));
+  }
+
+  .acc-subtitle-line:last-child {
+    background: linear-gradient(90deg, rgba(1,119,237,0.3), transparent);
+  }
+
+  .acc-subtitle-text {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--neon);
+    white-space: nowrap;
+    text-shadow: 0 0 10px rgba(1,119,237,0.4);
+  }
+
+  .acc-grid-3 {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  @media (max-width: 1024px) {
+    .acc-grid-3 { grid-template-columns: repeat(2, 1fr) !important; }
+  }
+
+  @media (max-width: 768px) {
+    .acc-grid-3 { grid-template-columns: 1fr !important; }
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--neon); }
+
+  /* NEON LINE DECORATION */
+  .neon-line-h {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--neon), transparent);
+    box-shadow: var(--neon-glow);
+    margin: 0;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); }
+    nav { gap: 1.5rem; }
+    nav a { font-size: 0.6rem; }
+  }
+
+  @media (max-width: 768px) {
+    .hero-grid { grid-template-columns: 1fr; text-align: center; }
+    .hero-right { display: none; }
+    .hero-tags { justify-content: center; }
+    .perks-inner { grid-template-columns: 1fr; }
+    .product-grid { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr; }
+    .why-grid { grid-template-columns: 1fr; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); }
+    nav { display: none; }
+    header { height: auto; min-height: 68px; padding: 10px 4%; align-items: flex-start; }
+    .logo { font-size: 1rem; padding-top: 4px; }
+    .header-actions { flex-wrap: wrap; justify-content: flex-end; gap: 0.5rem; max-width: 62vw; }
+    .search-wrap { order: 3; width: min(62vw, 260px); }
+    .search-input { width: 100%; }
+    .cart-drawer { width: 100%; right: -100%; }
+    .cart-items { padding: 0.8rem 1rem; }
+    .cart-footer { padding: 1rem; }
+    .sticky-tg { right: 1rem; bottom: 1rem; padding: 12px 16px; font-size: 0.62rem; max-width: calc(100vw - 2rem); }
+    #cursor-glow { display: none; }
+  }
+  /* ============ WOW EFFECTS ============ */
+
+  /* PARTICLE CANVAS */
+  #particle-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.45;
+  }
+
+  /* CURSOR GLOW */
+  #cursor-glow {
+    position: fixed;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(1,119,237,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    transition: transform 0.05s linear;
+  }
+
+  /* MARQUEE TICKER */
+  .ticker-wrap {
+    overflow: hidden;
+    width: 100%;
+    max-width: 100vw;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: rgba(1,119,237,0.04);
+    padding: 0;
+    white-space: nowrap;
+  }
+
+  .ticker-track {
+    display: inline-flex;
+    animation: tickerScroll 28s linear infinite;
+  }
+
+  .ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 10px 2.5rem;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(224,224,224,0.5);
+  }
+
+  .ticker-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--neon);
+    box-shadow: var(--neon-glow);
+    flex-shrink: 0;
+  }
+
+  .ticker-item .hl { color: var(--neon); }
+
+  @keyframes tickerScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.65s cubic-bezier(0.22,1,0.36,1), transform 0.65s cubic-bezier(0.22,1,0.36,1);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+  }
+
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+  }
+
+  .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+  /* STAGGER delays */
+  .reveal:nth-child(2) { transition-delay: 0.08s; }
+  .reveal:nth-child(3) { transition-delay: 0.16s; }
+  .reveal:nth-child(4) { transition-delay: 0.24s; }
+  .product-card:nth-child(2) { transition-delay: 0.1s; }
+  .product-card:nth-child(3) { transition-delay: 0.18s; }
+  .product-card:nth-child(4) { transition-delay: 0.26s; }
+
+  /* GLITCH HERO TITLE */
+  @keyframes glitch1 {
+    0%,94%,100% { clip-path: none; transform: none; }
+    95% { clip-path: polygon(0 20%, 100% 20%, 100% 35%, 0 35%); transform: translateX(-3px); }
+    97% { clip-path: polygon(0 60%, 100% 60%, 100% 75%, 0 75%); transform: translateX(3px); }
+    99% { clip-path: none; transform: none; }
+  }
+
+  .hero-title {
+    position: relative;
+  }
+
+  .hero-title::before,
+  .hero-title::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    color: var(--white);
+    text-transform: uppercase;
+  }
+
+  .hero-title::before {
+    color: rgba(1,119,237,0.7);
+    animation: glitch1 8s infinite;
+    left: 2px;
+  }
+
+  .hero-title::after {
+    color: rgba(255,0,80,0.4);
+    animation: glitch1 8s infinite 0.05s;
+    left: -2px;
+  }
+
+  /* ANIMATED COUNTER */
+  .stat-num {
+    display: inline-block;
+  }
+
+  /* NEON PULSE on product card hover */
+  @keyframes neonPulse {
+    0%, 100% { box-shadow: var(--neon-glow); }
+    50% { box-shadow: var(--neon-glow-strong); }
+  }
+
+  .product-card:hover {
+    animation: neonPulse 1.5s ease-in-out infinite;
+  }
+
+  /* HERO SCANLINE */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(1,119,237,0.012) 2px,
+      rgba(1,119,237,0.012) 4px
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero > * { position: relative; z-index: 1; }
+
+  /* SECTION NUMBER ACCENT */
+  .section-num {
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(1,119,237,0.35);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  /* NEON RING PULSE around hero phone */
+  @keyframes ringPulse {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+
+  .phone-ring {
+    position: absolute;
+    inset: -20px;
+    border-radius: 50px;
+    border: 1px solid rgba(1,119,237,0.4);
+    animation: ringPulse 2.5s ease-out infinite;
+    pointer-events: none;
+  }
+
+  .phone-ring:nth-child(2) { animation-delay: 0.8s; }
+  .phone-ring:nth-child(3) { animation-delay: 1.6s; }
+
+  /* SCROLLING INDICATOR */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    z-index: 2;
+  }
+
+  .scroll-indicator span {
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(224,224,224,0.3);
+  }
+
+  .scroll-mouse {
+    width: 22px;
+    height: 34px;
+    border: 1px solid rgba(1,119,237,0.35);
+    border-radius: 11px;
+    display: flex;
+    justify-content: center;
+    padding-top: 6px;
+  }
+
+  .scroll-wheel {
+    width: 3px;
+    height: 7px;
+    background: var(--neon);
+    border-radius: 2px;
+    animation: scrollWheel 1.8s ease-in-out infinite;
+    box-shadow: var(--neon-glow);
+  }
+
+  @keyframes scrollWheel {
+    0%, 100% { transform: translateY(0); opacity: 1; }
+    60% { transform: translateY(10px); opacity: 0; }
+    61% { transform: translateY(0); opacity: 0; }
+    80% { opacity: 1; }
+  }
+
+  /* CATEGORY NAV PILLS */
+  .cat-pills {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+
+  .cat-pill {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 7px 18px;
+    border: 1px solid rgba(1,119,237,0.25);
+    background: transparent;
+    color: rgba(224,224,224,0.5);
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .cat-pill:hover, .cat-pill.active {
+    border-color: var(--neon);
+    color: var(--neon);
+    background: rgba(1,119,237,0.07);
+    box-shadow: var(--neon-glow);
+  }
+
+  /* FLOATING PROMO BANNER */
+  .promo-strip {
+    background: linear-gradient(90deg, rgba(1,119,237,0.15), rgba(1,119,237,0.05), rgba(1,119,237,0.15));
+    border: 1px solid rgba(1,119,237,0.3);
+    padding: 1.2rem 5%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .promo-strip::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(1,119,237,0.12), transparent);
+    animation: promoShine 3s ease-in-out infinite;
+  }
+
+  @keyframes promoShine {
+    0% { left: -100%; }
+    100% { left: 200%; }
+  }
+
+  .promo-text {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--white);
+    position: relative;
+    z-index: 1;
+  }
+
+  .promo-text .hl {
+    color: var(--neon);
+    text-shadow: var(--neon-glow);
+  }
+
+</style>
+</head>
+<body>
+
+<!-- PARTICLE BG -->
+<canvas id="particle-canvas"></canvas>
+<!-- CURSOR GLOW -->
+<div id="cursor-glow"></div>
+
+<!-- PROMO STRIP -->
+<div class="promo-strip">
+  <p class="promo-text">🍉 <span class="hl">Arbuz Store</span> — Нові та вживані пристрої з гарантією · 📞 093-019-31-30 · 🇺🇦 <span class="hl">Доставка по всій країні</span> · Вигідний обмін та розстрочка 🔥</p>
+</div>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track" id="ticker">
+    <span class="ticker-item"><span class="ticker-dot"></span>iPhone 17 Pro Max <span class="hl">від 69 990 ₴</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Apple Watch Ultra 2 <span class="hl">від 34 990 ₴</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>MacBook Air M3 <span class="hl">від 44 990 ₴</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Вживані iPhone <span class="hl">з гарантією</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>AirPods Pro 2 <span class="hl">від 8 990 ₴</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Ремонт гаджетів <span class="hl">Одеса, Starosinna 1A</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>iPad Pro M4 <span class="hl">від 39 990 ₴</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Розстрочка <span class="hl">0% до 24 міс</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Trade-In <span class="hl">за реальною ціною</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Доставка <span class="hl">по всій Україні 🇺🇦</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>iPhone 17 Pro Max <span class="hl">від 69 990 ₴</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Apple Watch Ultra 2 <span class="hl">від 34 990 ₴</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>MacBook Air M3 <span class="hl">від 44 990 ₴</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Вживані iPhone <span class="hl">з гарантією</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>AirPods Pro 2 <span class="hl">від 8 990 ₴</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Ремонт гаджетів <span class="hl">Одеса, Starosinna 1A</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>iPad Pro M4 <span class="hl">від 39 990 ₴</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Розстрочка <span class="hl">0% до 24 міс</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Trade-In <span class="hl">за реальною ціною</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Доставка <span class="hl">по всій Україні 🇺🇦</span></span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">🍉</div>
+    <span class="logo-text">Arbuz Store</span>
+  </div>
+  <nav id="mainNav">
+    <a href="#iphones" data-uk="iPhone" data-en="iPhone">iPhone</a>
+    <a href="#laptops" data-uk="MacBook" data-en="MacBook">MacBook</a>
+    <a href="#tablets" data-uk="iPad" data-en="iPad">iPad</a>
+    <a href="#watches" data-uk="Apple Watch" data-en="Apple Watch">Apple Watch</a>
+    <a href="#headphones" data-uk="Навушники" data-en="Headphones">Навушники</a>
+    <a href="#accessories" data-uk="Аксесуари" data-en="Accessories">Аксесуари</a>
+    <a href="#service" data-uk="Ремонт" data-en="Repair">Ремонт</a>
+    <a href="#tradein" data-uk="Trade-In" data-en="Trade-In">Trade-In</a>
+  </nav>
+  <div class="header-actions">
+    <!-- LIVE SEARCH -->
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" id="searchInput" type="text" placeholder="Пошук товарів..." autocomplete="off" data-uk-placeholder="Пошук товарів..." data-en-placeholder="Search products...">
+      <div class="search-results" id="searchResults"></div>
+    </div>
+    <!-- LANGUAGE -->
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('uk')" id="langUk">UA</button>
+      <button class="lang-btn" onclick="setLang('en')" id="langEn">EN</button>
+    </div>
+    <!-- CART -->
+    <button class="cart-btn-header" onclick="toggleCart()" aria-label="Кошик">
+      🛒
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- CART OVERLAY -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+<!-- CART DRAWER -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <div class="cart-title" data-uk="🛒 Кошик" data-en="🛒 Cart">🛒 Кошик</div>
+    <button class="cart-close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty-state" id="cartEmpty">
+      <div class="big-icon">🛒</div>
+      <p data-uk="Кошик порожній.<br>Оберіть товар у каталозі." data-en="Cart is empty.<br>Choose a product from catalog.">Кошик порожній.<br>Оберіть товар у каталозі.</p>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total-row">
+      <span class="cart-total-label" data-uk="Разом" data-en="Total">Разом</span>
+      <span class="cart-total-price" id="cartTotal">0 ₴</span>
+    </div>
+    <div class="order-form" id="orderForm">
+      <input class="order-input" id="orderName" type="text" placeholder="Ваше ім'я *" data-uk-placeholder="Ваше ім'я *" data-en-placeholder="Your name *" autocomplete="name">
+      <input class="order-input" id="orderPhone" type="tel" placeholder="Номер телефону * (+380...)" data-uk-placeholder="Номер телефону * (+380...)" data-en-placeholder="Phone number * (+380...)" autocomplete="tel" inputmode="tel">
+      <input class="order-input" id="orderComment" type="text" placeholder="Коментар (необов'язково)" data-uk-placeholder="Коментар (необов'язково)" data-en-placeholder="Comment (optional)" autocomplete="off">
+      <div class="order-error" id="orderError"></div>
+      <button class="btn-primary" style="width:100%;justify-content:center;" onclick="submitOrder()">
+        ✈️ &nbsp;<span data-uk="Оформити замовлення" data-en="Place order">Оформити замовлення</span>
+      </button>
+    </div>
+    <div class="order-sending" id="orderSending">⏳ &nbsp;<span data-uk="Надсилаємо замовлення..." data-en="Sending order...">Надсилаємо замовлення...</span></div>
+    <div class="order-success" id="orderSuccess">
+      <div class="success-icon">✅</div>
+      <p data-uk="Замовлення надіслано!<br>Ми зв'яжемося з вами протягом 15 хвилин." data-en="Order sent!<br>We'll contact you within 15 minutes.">Замовлення надіслано!<br>Ми зв'яжемося з вами протягом 15 хвилин.</p>
+    </div>
+  </div>
+</div>
+
+<!-- STICKY TELEGRAM BUTTON -->
+<button class="sticky-tg" id="stickyTg" onclick="window.open('https://t.me/arbuz_store','_blank')">
+  <span class="sticky-tg-pulse"></span>
+  <span data-uk="Написати в Telegram" data-en="Message on Telegram">Написати в Telegram</span>
+</button>
+
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-left">
+      <div class="hero-tags">
+        <span class="tag">[ Нові та Вживані ]</span>
+        <span class="tag">[ 4192+ Клієнтів ]</span>
+        <span class="tag">[ Ремонт Гаджетів ]</span>
+      </div>
+      <h1 class="hero-title">
+        iPhone 17 Pro
+        <span class="neon-line">Оригінал</span>
+      </h1>
+      <p class="hero-sub">Офіційна гарантія · Одеса, Starosinna 1A · 📞 093-019-31-30</p>
+      <div style="display:flex; gap: 1rem; flex-wrap: wrap;">
+        <button class="btn-primary" onclick="openModal()">Підібрати Модель</button>
+        <button class="btn-outline" onclick="document.getElementById('service').scrollIntoView({behavior:'smooth'})">Ремонт →</button>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="phone-showcase">
+        <div class="phone-ring"></div>
+        <div class="phone-ring"></div>
+        <div class="phone-ring"></div>
+        <div class="phone-main">
+          <div class="phone-screen-content">
+            <div class="apple-logo">🍏</div>
+            <p>iPhone 17 Pro</p>
+            <p style="margin-top:8px; font-size:0.5rem; opacity:0.5;">A19 Bionic · 48MP</p>
+          </div>
+        </div>
+        <div class="floating-badge badge-1">🛡 Рік Гарантії</div>
+        <div class="floating-badge badge-2">💙 Оригінал</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- PERKS -->
+<section class="perks">
+  <div class="perks-inner">
+    <div class="perk">
+      <div class="perk-icon">🍏</div>
+      <h4>Нові та Вживані</h4>
+      <p>Пристрої з гарантією</p>
+    </div>
+    <div class="perk">
+      <div class="perk-icon">🔧</div>
+      <h4>Ремонт Гаджетів</h4>
+      <p>Швидко та якісно</p>
+    </div>
+    <div class="perk">
+      <div class="perk-icon">🇺🇦</div>
+      <h4>Доставка по Всій Країні</h4>
+      <p>Нова Пошта · Укрпошта</p>
+    </div>
+    <div class="perk">
+      <div class="perk-icon">♻️</div>
+      <h4>Вигідний Обмін</h4>
+      <p>Trade-In та розстрочка</p>
+    </div>
+  </div>
+</section>
+
+<!-- CATALOG IPHONES -->
+<section class="catalog" id="iphones">
+  <div class="section-header">
+    <span class="section-label">// Каталог</span>
+    <h2 class="section-title">Новинки та Пропозиції</h2>
+    <div class="neon-divider"></div>
+  </div>
+
+  <div class="filter-bar">
+    <span class="filter-label">Фільтр:</span>
+    <button class="filter-btn active" onclick="filterProducts(this,'all')">Всі</button>
+    <button class="filter-btn" onclick="filterProducts(this,'new')">Нові</button>
+    <button class="filter-btn" onclick="filterProducts(this,'used')">Вживані</button>
+  </div>
+
+  <div class="product-grid">
+
+    <div class="product-card">
+      <div class="card-badge new">Новий</div>
+      <div class="card-img">📱</div>
+      <div class="card-model">iPhone 17 Pro Max</div>
+      <div class="card-tag">Titanium · A19 Bionic · 48MP ProRes</div>
+      <div class="card-price"><span>Від</span>69 990 ₴</div>
+      <button class="card-btn" onclick="openModal('iPhone 17 Pro Max', '69990')">До Кошика</button>
+    </div>
+
+    <div class="product-card">
+      <div class="card-badge new">Новий</div>
+      <div class="card-img">📱</div>
+      <div class="card-model">iPhone 17 Pro</div>
+      <div class="card-tag">Titanium · A19 · Нічний Режим</div>
+      <div class="card-price"><span>Від</span>54 990 ₴</div>
+      <button class="card-btn" onclick="openModal('iPhone 17 Pro', '54990')">До Кошика</button>
+    </div>
+
+    <div class="product-card">
+      <div class="card-badge" style="background:#7c3aed;">Air</div>
+      <div class="card-img">📱</div>
+      <div class="card-model">iPhone Air</div>
+      <div class="card-tag">Найтонший iPhone · 6.9" OLED</div>
+      <div class="card-price"><span>Від</span>44 990 ₴</div>
+      <button class="card-btn" onclick="openModal('iPhone Air', '44990')">До Кошика</button>
+    </div>
+
+    <div class="product-card">
+      <div class="card-badge hot">Хіт</div>
+      <div class="card-img">📱</div>
+      <div class="card-model">iPhone 16 Pro</div>
+      <div class="card-tag">Desert Titanium · 48MP · USB-C</div>
+      <div class="card-price"><span>Від</span>41 990 ₴</div>
+      <button class="card-btn" onclick="openModal('iPhone 16 Pro', '41990')">До Кошика</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- GIFT BANNER -->
+<div style="background: linear-gradient(135deg, rgba(1,119,237,0.12), rgba(124,58,237,0.10)); border-top: 1px solid rgba(1,119,237,0.25); border-bottom: 1px solid rgba(124,58,237,0.25); padding: 2.5rem 5%;">
+  <div style="max-width:1200px; margin:auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.5rem;">
+    <div style="display:flex; align-items:center; gap:1.5rem;">
+      <div style="font-size:2.8rem; filter:drop-shadow(0 0 15px rgba(1,119,237,0.6));">🎁</div>
+      <div>
+        <div style="font-size:0.6rem; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:var(--neon); margin-bottom:0.4rem;">// Подарунки</div>
+        <div style="font-size:1.25rem; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:var(--white); line-height:1.2;">Для неї — лише найкраще!</div>
+        <div style="font-size:0.72rem; letter-spacing:0.06em; color:rgba(224,224,224,0.5); margin-top:0.4rem;">Підбери подарунок коханій у Arbuz Store · Консультація в Direct</div>
+      </div>
+    </div>
+    <button class="btn-primary" onclick="window.open('https://www.instagram.com/arbuz.store.ua/')">Обрати Подарунок →</button>
+  </div>
+</div>
+
+<!-- USED IPHONES -->
+<section class="catalog" style="background: var(--bg2); margin:0; max-width:100%; padding-left:5%; padding-right:5%; padding-top:5rem; padding-bottom:5rem;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="section-header">
+      <span class="section-label">// Вживані</span>
+      <h2 class="section-title">Вживані iPhone<br><span style="color:var(--neon);font-size:0.65em;letter-spacing:0.15em;">з гарантією</span></h2>
+      <div class="neon-divider"></div>
+      <p style="margin-top:1.2rem; font-size:0.72rem; letter-spacing:0.08em; color:rgba(224,224,224,0.45); text-transform:uppercase;">Кожен пристрій перевірено · Офіційна гарантія · Як новий</p>
+    </div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="card-badge" style="background:#059669;">Вживаний</div>
+        <div class="card-img">📱</div>
+        <div class="card-model">iPhone 16 Pro Max</div>
+        <div class="card-tag">256GB/512GB · USB-C · Стан A/A+</div>
+        <div class="card-price"><span>Від</span>38 990 ₴</div>
+        <button class="card-btn" onclick="openModalSimple('iPhone 16 Pro Max (вживаний)','📱','Перевірений вживаний iPhone 16 Pro Max. Стан A або A+, повна комплектація, 3 місяці гарантії від Arbuz Store.','38 990 ₴')">До Кошика</button>
+      </div>
+      <div class="product-card">
+        <div class="card-badge" style="background:#059669;">Вживаний</div>
+        <div class="card-img">📱</div>
+        <div class="card-model">iPhone 15 Pro Max</div>
+        <div class="card-tag">256GB/512GB · USB-C · Titanium</div>
+        <div class="card-price"><span>Від</span>29 990 ₴</div>
+        <button class="card-btn" onclick="openModalSimple('iPhone 15 Pro Max (вживаний)','📱','Вживаний iPhone 15 Pro Max у відмінному стані. Titanium корпус, USB-C, 48MP камера. Гарантія 3 місяці.','29 990 ₴')">До Кошика</button>
+      </div>
+      <div class="product-card">
+        <div class="card-badge hot">Хіт</div>
+        <div class="card-badge" style="background:#059669; top:42px;">Вживаний</div>
+        <div class="card-img">📱</div>
+        <div class="card-model">iPhone 14 Pro Max</div>
+        <div class="card-tag">128GB/256GB · USB-C · Dynamic Island</div>
+        <div class="card-price"><span>Від</span>22 990 ₴</div>
+        <button class="card-btn" onclick="openModalSimple('iPhone 14 Pro Max (вживаний)','📱','Найпопулярніша вживана модель. Dynamic Island, ProRes відео, 48MP. Стан A, гарантія 3 місяці від магазину.','22 990 ₴')">До Кошика</button>
+      </div>
+      <div class="product-card">
+        <div class="card-badge" style="background:#059669;">Вживаний</div>
+        <div class="card-img">📱</div>
+        <div class="card-model">iPhone 13 Pro</div>
+        <div class="card-tag">128GB/256GB · Lightning · ProRes</div>
+        <div class="card-price"><span>Від</span>14 990 ₴</div>
+        <button class="card-btn" onclick="openModalSimple('iPhone 13 Pro (вживаний)','📱','Вживаний iPhone 13 Pro — оптимальний вибір за ціною/якістю. ProMotion 120Hz, 3 камери Pro, гарантія 3 місяці.','14 990 ₴')">До Кошика</button>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:2.5rem;">
+      <div style="font-size:0.65rem; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:rgba(224,224,224,0.4); margin-bottom:1rem;">📞 Більше моделей — уточнюй наявність</div>
+      <button class="btn-outline" onclick="window.open('https://t.me/arbuz_store')">Написати в Telegram — дивитись всі вживані →</button>
+    </div>
+  </div>
+</section>
+
+<div class="neon-line-h"></div>
+
+<!-- LAPTOPS -->
+<section class="catalog" id="laptops">
+  <div class="section-header">
+    <span class="section-label">// MacBook</span>
+    <h2 class="section-title">Ноутбуки Apple</h2>
+    <div class="neon-divider"></div>
+  </div>
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="card-badge new">Новий</div>
+      <div class="card-img">💻</div>
+      <div class="card-model">MacBook Pro 16"</div>
+      <div class="card-tag">M4 Pro · 24GB RAM · 512GB SSD</div>
+      <div class="card-price"><span>Від</span>109 990 ₴</div>
+      <button class="card-btn" onclick="openModalSimple('MacBook Pro 16&quot;','💻','Потужна робоча станція у тонкому корпусі. Чіп M4 Pro, до 24 годин автономної роботи, дисплей Liquid Retina XDR.','109 990 ₴')">До Кошика</button>
+    </div>
+    <div class="product-card">
+      <div class="card-badge new">Новий</div>
+      <div class="card-img">💻</div>
+      <div class="card-model">MacBook Pro 14"</div>
+      <div class="card-tag">M4 · 16GB RAM · 512GB SSD</div>
+      <div class="card-price"><span>Від</span>79 990 ₴</div>
+      <button class="card-btn" onclick="openModalSimple('MacBook Pro 14&quot;','💻','Компактний і неймовірно потужний. M4, Liquid Retina XDR 3024×1964, три порти Thunderbolt 5.','79 990 ₴')">До Кошика</button>
+    </div>
+    <div class="product-card">
+      <div class="card-badge hot">Хіт</div>
+      <div class="card-img">💻</div>
+      <div class="card-model">MacBook Air 15"</div>
+      <div class="card-tag">M3 · 16GB RAM · 256GB SSD</div>
+      <div class="card-price"><span>Від</span>59 990 ₴</div>
+      <button class="card-btn" onclick="openModalSimple('MacBook Air 15&quot;','💻','Найпопулярніший ноутбук Apple. Безшумний, легкий, до 18 годин роботи. Ідеал для навчання та роботи.','59 990 ₴')">До Кошика</button>
+    </div>
+    <div class="product-card">
+      <div class="card-img">💻</div>
+      <div class="card-model">MacBook Air 13"</div>
+      <div class="card-tag">M3 · 8GB RAM · 256GB SSD</div>
+      <div class="card-price"><span>Від</span>44 990 ₴</div>
+      <button class="card-btn" onclick="openModalSimple('MacBook Air 13&quot;','💻','Ультратонкий та легкий — лише 1.24 кг. Чіп M3, дисплей Liquid Retina, MagSafe.','44 990 ₴')">До Кошика</button>
+    </div>
+  </div>
+</section>
+
+<div class="neon-line-h"></div>
+
+<!-- TABLETS -->
+<section class="catalog" id="tablets" style="background: var(--bg2); margin: 0; max-width: 100%; padding-left: 5%; padding-right: 5%;">
+  <div style="max-width:1200px; margin: 0 auto;">
+  <div class="section-header">
+    <span class="section-label">// iPad</span>
+    <h2 class="section-title">Планшети Apple</h2>
+    <div class="neon-divider"></div>
+  </div>
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="card-badge new">Новий</div>
+      <div class="card-img">📟</div>
+      <div class="card-model">iPad Pro 13"</div>
+      <div class="card-tag">M4 · Ultra Retina XDR · OLED</div>
+      <div class="card-price"><span>Від</span>54 990 ₴</div>
+      <button class="card-btn" onclick="openModalSimple('iPad Pro 13&quot;','📟','Найпотужніший iPad усіх часів. Неймовірно тонкий — 5.1 мм. Подвійний OLED, Apple Pencil Pro.','54 990 ₴')">До Кошика</button>
+    </div>
+    <div class="product-card">
+      <div class="card-badge new">Новий</div>
+      <div class="card-img">📟</div>
+      <div class="card-model">iPad Pro 11"</div>
+      <div class="card-tag">M4 · Ultra Retina XDR · OLED</div>
+      <div class="card-price"><span>Від</span>39 990 ₴</div>
+      <button class="card-btn" onclick="openModalSimple('iPad Pro 11&quot;','📟','Компактний і неймовірно потужний. M4, OLED, підтримка Apple Pencil Pro та Magic Keyboard.','39 990 ₴')">До Кошика</button>
+    </div>
+    <div class="product-card">
+      <div class="card-badge new">Новий</div>
+      <div class="card-img">📟</div>
+      <div class="card-model">iPad Air 11" M4</div>
+      <div class="card-tag">M4 (2026) · 256GB Wi-Fi+LTE · Space Gray</div>
+      <div class="card-price"><span>Від</span>40 600 ₴</div>
+      <button class="card-btn" onclick="openModalSimple('iPad Air 11&quot; M4 (2026)','📟','Новий рівень. Легкий. Потужний. Безмежний. Сертифікований офіційний пристрій в Україні. Гарантія та підтримка від офіційних сервісів.','40 600 ₴')">До Кошика</button>
+    </div>
+    <div class="product-card">
+      <div class="card-img">📟</div>
+      <div class="card-model">iPad 10"</div>
+      <div class="card-tag">A14 Bionic · 10.9" · USB-C</div>
+      <div class="card-price"><span>Від</span>14 990 ₴</div>
+      <button class="card-btn" onclick="openModalSimple('iPad 10&quot;','📟','Яскравий 10.9&quot; дисплей, Apple Pencil, USB-C. Ідеальний старт у світ Apple.','14 990 ₴')">До Кошика</button>
+    </div>
+  </div>
+  </div>
+</section>
+
+<div class="neon-line-h"></div>
+
+<!-- POWERBANKS -->
+<section class="catalog" id="powerbanks">
+  <div class="section-header">
+    <span class="section-label">// Заряд</span>
+    <h2 class="section-title">Павербанки</h2>
+    <div class="neon-divider"></div>
+  </div>
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="card-badge" style="background:#059669;">MagSafe</div>
+      <div class="card-img">🔋</div>
+      <div class="card-model">Apple MagSafe Battery</div>
+      <div class="card-tag">MagSafe · 7.5W · 1460 mAh</div>
+      <div class="card-price"><span>Від</span>2 490 ₴</div>
+      <button class="card-btn" onclick="openModalSimple('Apple MagSafe Battery','🔋','Офіційний магнітний павербанк Apple. Кріпиться до iPhone 12-17, заряд через MagSafe до 7.5W.','2 490 ₴')">До Кошика</button>
+    </div>
+    <div class="product-card">
+      <div class="card-badge hot">Топ</div>
+      <div class="card-img">🔋</div>
+      <div class="card-model">Anker MagGo 10K</div>
+      <div class="card-tag">MagSafe · 15W · 10 000 mAh · USB-C</div>
+      <div class="card-price"><span>Від</span>1 990 ₴</div>
+      <button class="card-btn" onclick="openModalSimple('Anker MagGo 10K','🔋','Потужний MagSafe-павербанк на 10 000 mAh. 15W бездротова зарядка, USB-C 20W PD.','1 990 ₴')">До Кошика</button>
+    </div>
+    <div class="product-card">
+      <div class="card-img">🔋</div>
+      <div class="card-model">Baseus 20K PD</div>
+      <div class="card-tag">65W PD · 20 000 mAh · Два USB-C</div>
+      <div class="card-price"><span>Від</span>1 490 ₴</div>
+      <button class="card-btn" onclick="openModalSimple('Baseus 20K PD','🔋','Заряди MacBook та iPhone одночасно. 65W Power Delivery, 20 000 mAh, два USB-C.','1 490 ₴')">До Кошика</button>
+    </div>
+    <div class="product-card">
+      <div class="card-img">🔋</div>
+      <div class="card-model">Baseus Mini 5K</div>
+      <div class="card-tag">20W · 5 000 mAh · Кишеньковий</div>
+      <div class="card-price"><span>Від</span>590 ₴</div>
+      <button class="card-btn" onclick="openModalSimple('Baseus Mini 5K','🔋','Найменший павербанк у нашому каталозі. Легко вміщується в кишеню, 20W заряд iPhone.','590 ₴')">До Кошика</button>
+    </div>
+  </div>
+</section>
+
+<div class="neon-line-h"></div>
+
+<!-- ACCESSORIES -->
+<section class="catalog" id="accessories" style="background: var(--bg2); margin: 0; max-width: 100%; padding-left: 5%; padding-right: 5%; padding-top: 6rem; padding-bottom: 6rem;">
+  <div style="max-width:1200px; margin: 0 auto;">
+  <div class="section-header">
+    <span class="section-label">// Аксесуари</span>
+    <h2 class="section-title">Аксесуари для Техніки</h2>
+    <div class="neon-divider"></div>
+  </div>
+
+  <!-- Subsection: Cases -->
+  <div class="acc-subsection">
+    <div class="acc-subtitle">
+      <span class="acc-subtitle-line"></span>
+      <span class="acc-subtitle-text">// Чохли</span>
+      <span class="acc-subtitle-line"></span>
+    </div>
+    <div class="product-grid acc-grid-3">
+      <div class="product-card">
+        <div class="card-badge" style="background:#7c3aed;">MagSafe</div>
+        <div class="card-img" style="font-size:3.5rem;">🛡️</div>
+        <div class="card-model">Apple Clear Case MagSafe</div>
+        <div class="card-tag">iPhone 15–17 · Прозорий · MagSafe</div>
+        <div class="card-price"><span>Від</span>1 290 ₴</div>
+        <button class="card-btn" onclick="openModalSimple('Apple Clear Case MagSafe','🛡️','Офіційний прозорий чохол Apple з підтримкою MagSafe. Захищає від подряпин, зберігає дизайн.','1 290 ₴')">До Кошика</button>
+      </div>
+      <div class="product-card">
+        <div class="card-badge hot">Хіт</div>
+        <div class="card-img" style="font-size:3.5rem;">🛡️</div>
+        <div class="card-model">Apple Silicone Case</div>
+        <div class="card-tag">iPhone 15–17 · 12 кольорів · MagSafe</div>
+        <div class="card-price"><span>Від</span>1 190 ₴</div>
+        <button class="card-btn" onclick="openModalSimple('Apple Silicone Case','🛡️','М\'який силіконовий чохол Apple. Приємний на дотик, 12 кольорів у наявності, MagSafe.','1 190 ₴')">До Кошика</button>
+      </div>
+      <div class="product-card">
+        <div class="card-img" style="font-size:3.5rem;">🛡️</div>
+        <div class="card-model">Spigen Ultra Hybrid</div>
+        <div class="card-tag">iPhone 13–17 · Мілітарі-захист</div>
+        <div class="card-price"><span>Від</span>590 ₴</div>
+        <button class="card-btn" onclick="openModalSimple('Spigen Ultra Hybrid','🛡️','Подвійна система захисту: TPU + полікарбонат. Пройшов тест MIL-STD-810G.','590 ₴')">До Кошика</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Subsection: Glass -->
+  <div class="acc-subsection">
+    <div class="acc-subtitle">
+      <span class="acc-subtitle-line"></span>
+      <span class="acc-subtitle-text">// Захисні Стекла</span>
+      <span class="acc-subtitle-line"></span>
+    </div>
+    <div class="product-grid acc-grid-3">
+      <div class="product-card">
+        <div class="card-badge new">Нове</div>
+        <div class="card-img" style="font-size:3.5rem;">🪟</div>
+        <div class="card-model">Apple Vision Pro Glass</div>
+        <div class="card-tag">iPhone 17 Pro/Max · 9H · Приватність</div>
+        <div class="card-price"><span>Від</span>590 ₴</div>
+        <button class="card-btn" onclick="openModalSimple('Apple Vision Pro Glass','🪟','Оригінальне захисне скло з антипідглядуванням. Твердість 9H, антивідблисок, захист від підглядування.','590 ₴')">До Кошика</button>
+      </div>
+      <div class="product-card">
+        <div class="card-badge hot">Хіт</div>
+        <div class="card-img" style="font-size:3.5rem;">🪟</div>
+        <div class="card-model">Spigen GLAS.tR EZ Fit</div>
+        <div class="card-tag">iPhone 13–17 · 9H · Easy Install</div>
+        <div class="card-price"><span>Від</span>390 ₴</div>
+        <button class="card-btn" onclick="openModalSimple('Spigen GLAS.tR EZ Fit','🪟','Захисне скло з рамкою для точного встановлення без бульбашок. Твердість 9H, 2 шт у комплекті.','390 ₴')">До Кошика</button>
+      </div>
+      <div class="product-card">
+        <div class="card-img" style="font-size:3.5rem;">🪟</div>
+        <div class="card-model">Захисна плівка Matt</div>
+        <div class="card-tag">iPhone / iPad · Матова · Антивідблисок</div>
+        <div class="card-price"><span>Від</span>190 ₴</div>
+        <button class="card-btn" onclick="openModalSimple('Захисна плівка Matt','🪟','Матова плівка з антивідбликовим покриттям. Ідеальна для тих, хто користується телефоном на вулиці.','190 ₴')">До Кошика</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Subsection: Chargers -->
+  <div class="acc-subsection">
+    <div class="acc-subtitle">
+      <span class="acc-subtitle-line"></span>
+      <span class="acc-subtitle-text">// Блоки Живлення</span>
+      <span class="acc-subtitle-line"></span>
+    </div>
+    <div class="product-grid acc-grid-3">
+      <div class="product-card">
+        <div class="card-badge new">Оригінал</div>
+        <div class="card-img" style="font-size:3.5rem;">🔌</div>
+        <div class="card-model">Apple 30W USB-C</div>
+        <div class="card-tag">30W · USB-C · iPhone / iPad / MacBook</div>
+        <div class="card-price"><span>Від</span>890 ₴</div>
+        <button class="card-btn" onclick="openModalSimple('Apple 30W USB-C','🔌','Оригінальний блок живлення Apple 30W. Заряджає iPhone 17 до 50% за 30 хвилин.','890 ₴')">До Кошика</button>
+      </div>
+      <div class="product-card">
+        <div class="card-badge hot">Топ</div>
+        <div class="card-img" style="font-size:3.5rem;">🔌</div>
+        <div class="card-model">Anker GaN 65W</div>
+        <div class="card-tag">65W · 3 порти · GaN · USB-C×2 + A</div>
+        <div class="card-price"><span>Від</span>1 190 ₴</div>
+        <button class="card-btn" onclick="openModalSimple('Anker GaN 65W','🔌','Зарядний блок нового покоління GaN. 65W, три порти одночасно, розмір як у Apple 20W.','1 190 ₴')">До Кошика</button>
+      </div>
+      <div class="product-card">
+        <div class="card-img" style="font-size:3.5rem;">🔌</div>
+        <div class="card-model">Apple 20W USB-C</div>
+        <div class="card-tag">20W · USB-C · iPhone / AirPods</div>
+        <div class="card-price"><span>Від</span>590 ₴</div>
+        <button class="card-btn" onclick="openModalSimple('Apple 20W USB-C','🔌','Оригінальний компактний зарядний блок Apple 20W. Швидка зарядка для iPhone та AirPods.','590 ₴')">До Кошика</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Subsection: Cables -->
+  <div class="acc-subsection">
+    <div class="acc-subtitle">
+      <span class="acc-subtitle-line"></span>
+      <span class="acc-subtitle-text">// Кабелі</span>
+      <span class="acc-subtitle-line"></span>
+    </div>
+    <div class="product-grid acc-grid-3">
+      <div class="product-card">
+        <div class="card-badge new">Оригінал</div>
+        <div class="card-img" style="font-size:3.5rem;">🔗</div>
+        <div class="card-model">Apple USB-C 1m</div>
+        <div class="card-tag">USB-C · 60W · iPhone 15–17 / iPad / Mac</div>
+        <div class="card-price"><span>Від</span>590 ₴</div>
+        <button class="card-btn" onclick="openModalSimple('Apple USB-C Cable 1m','🔗','Оригінальний кабель Apple USB-C to USB-C. 60W зарядка, плетений нейлоновий корпус, 1 метр.','590 ₴')">До Кошика</button>
+      </div>
+      <div class="product-card">
+        <div class="card-badge hot">Хіт</div>
+        <div class="card-img" style="font-size:3.5rem;">🔗</div>
+        <div class="card-model">Anker USB-C 240W</div>
+        <div class="card-tag">USB-C · 240W · MacBook Pro / iPad</div>
+        <div class="card-price"><span>Від</span>690 ₴</div>
+        <button class="card-btn" onclick="openModalSimple('Anker USB-C 240W','🔗','Найпотужніший USB-C кабель для MacBook Pro. 240W Power Delivery, нейлонове плетення, 1.8 м.','690 ₴')">До Кошика</button>
+      </div>
+      <div class="product-card">
+        <div class="card-img" style="font-size:3.5rem;">🔗</div>
+        <div class="card-model">Baseus Lightning 2m</div>
+        <div class="card-tag">Lightning · 20W · iPhone до 14</div>
+        <div class="card-price"><span>Від</span>290 ₴</div>
+        <button class="card-btn" onclick="openModalSimple('Baseus Lightning 2m','🔗','Плетений Lightning-кабель 2 метри для iPhone до 14 покоління. MFi сертифікований.','290 ₴')">До Кошика</button>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<div class="neon-line-h"></div>
+
+<!-- HEADPHONES -->
+<section class="catalog" id="headphones">
+  <div class="section-header">
+    <span class="section-label">// Аудіо</span>
+    <h2 class="section-title">Навушники</h2>
+    <div class="neon-divider"></div>
+  </div>
+  <div class="product-grid">
+
+    <div class="product-card">
+      <div class="card-badge new">Новий</div>
+      <div class="card-img">🎧</div>
+      <div class="card-model">AirPods Pro 2</div>
+      <div class="card-tag">H2 · ANC · Просторовий Звук · USB-C</div>
+      <div class="card-price"><span>Від</span>8 990 ₴</div>
+      <button class="card-btn" onclick="openModalSimple('AirPods Pro 2','🎧','Адаптивне шумоподавлення нового покоління. Чіп H2, Персоналізований Просторовий Звук, до 30 годин з кейсом.','8 990 ₴')">До Кошика</button>
+    </div>
+
+    <div class="product-card">
+      <div class="card-badge hot">Хіт</div>
+      <div class="card-img">🎧</div>
+      <div class="card-model">AirPods 4</div>
+      <div class="card-tag">H2 · ANC · USB-C · Відкрита Посадка</div>
+      <div class="card-price"><span>Від</span>5 490 ₴</div>
+      <button class="card-btn" onclick="openModalSimple('AirPods 4','🎧','Нові AirPods 4 з активним шумоподавленням. Ергономічна відкрита посадка, чіп H2, USB-C кейс.','5 490 ₴')">До Кошика</button>
+    </div>
+
+    <div class="product-card">
+      <div class="card-badge" style="background:#7c3aed;">Premium</div>
+      <div class="card-img">🎧</div>
+      <div class="card-model">AirPods Max</div>
+      <div class="card-tag">H1×2 · ANC · Алюміній · USB-C</div>
+      <div class="card-price"><span>Від</span>19 990 ₴</div>
+      <button class="card-btn" onclick="openModalSimple('AirPods Max','🎧','Накладні навушники преміум-класу. Алюмінієві амбушури, подвійний чіп H1, найкраще ANC від Apple, 20 годин музики.','19 990 ₴')">До Кошика</button>
+    </div>
+
+    <div class="product-card">
+      <div class="card-img">🎧</div>
+      <div class="card-model">AirPods 3</div>
+      <div class="card-tag">H1 · Просторовий Звук · Lightning</div>
+      <div class="card-price"><span>Від</span>3 990 ₴</div>
+      <button class="card-btn" onclick="openModalSimple('AirPods 3','🎧','Попереднє покоління за вигідною ціною. Просторовий Звук з відстеженням голови, стійкість до поту та води IPX4.','3 990 ₴')">До Кошика</button>
+    </div>
+
+  </div>
+
+  <!-- Beats subsection -->
+  <div class="acc-subsection" style="margin-top: 3.5rem;">
+    <div class="acc-subtitle">
+      <span class="acc-subtitle-line"></span>
+      <span class="acc-subtitle-text">// Beats by Dre</span>
+      <span class="acc-subtitle-line"></span>
+    </div>
+    <div class="product-grid acc-grid-3">
+      <div class="product-card">
+        <div class="card-badge hot">Топ</div>
+        <div class="card-img" style="font-size:3.5rem;">🎵</div>
+        <div class="card-model">Beats Studio Pro</div>
+        <div class="card-tag">ANC · 40 год · USB-C · Bluetooth 5.3</div>
+        <div class="card-price"><span>Від</span>9 490 ₴</div>
+        <button class="card-btn" onclick="openModalSimple('Beats Studio Pro','🎵','Флагманські навушники Beats. ANC + прозорий режим, 40 годин роботи, USB-C та 3.5mm, сумісність з Apple та Android.','9 490 ₴')">До Кошика</button>
+      </div>
+      <div class="product-card">
+        <div class="card-img" style="font-size:3.5rem;">🎵</div>
+        <div class="card-model">Beats Fit Pro</div>
+        <div class="card-tag">ANC · Крила-Фіксатори · H1 · IPX4</div>
+        <div class="card-price"><span>Від</span>5 990 ₴</div>
+        <button class="card-btn" onclick="openModalSimple('Beats Fit Pro','🎵','Вставні навушники для активного способу життя. Крила-фіксатори не дають випасти під час тренування, ANC та прозорий режим.','5 990 ₴')">До Кошика</button>
+      </div>
+      <div class="product-card">
+        <div class="card-img" style="font-size:3.5rem;">🎵</div>
+        <div class="card-model">Beats Flex</div>
+        <div class="card-tag">Провідні · USB-C · 12 год · Apple W1</div>
+        <div class="card-price"><span>Від</span>1 490 ₴</div>
+        <button class="card-btn" onclick="openModalSimple('Beats Flex','🎵','Бюджетні провідні навушники з чіпом Apple W1. Авто-пауза при вийманні, магнітні навушники, 12 годин музики.','1 490 ₴')">До Кошика</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="neon-line-h"></div>
+
+<!-- APPLE WATCH -->
+<section class="catalog" id="watches">
+  <div class="section-header">
+    <span class="section-label">// Apple Watch</span>
+    <h2 class="section-title">Смарт-Годинники</h2>
+    <div class="neon-divider"></div>
+  </div>
+  <div class="product-grid">
+
+    <div class="product-card">
+      <div class="card-badge new">Новий</div>
+      <div class="card-img">⌚</div>
+      <div class="card-model">Apple Watch Ultra 2</div>
+      <div class="card-tag">Titanium · GPS+Cellular · 49mm · 60 год</div>
+      <div class="card-price"><span>Від</span>34 990 ₴</div>
+      <button class="card-btn" onclick="openModalSimple('Apple Watch Ultra 2','⌚','Найпотужніший Apple Watch. Титановий корпус 49мм, GPS+Cellular, до 60 годин автономії, захист від води до 100м, ActionButton.','34 990 ₴')">До Кошика</button>
+    </div>
+
+    <div class="product-card">
+      <div class="card-badge new">Новий</div>
+      <div class="card-img">⌚</div>
+      <div class="card-model">Apple Watch Series 10</div>
+      <div class="card-tag">Aluminium · GPS · 46mm · OLED Always-On</div>
+      <div class="card-price"><span>Від</span>14 990 ₴</div>
+      <button class="card-btn" onclick="openModalSimple('Apple Watch Series 10','⌚','Найтонший Apple Watch Series. Великий OLED Always-On дисплей, до 18 годин роботи, вимірювання сну та SpO2.','14 990 ₴')">До Кошика</button>
+    </div>
+
+    <div class="product-card">
+      <div class="card-badge hot">Хіт</div>
+      <div class="card-img">⌚</div>
+      <div class="card-model">Apple Watch SE (2)</div>
+      <div class="card-tag">Aluminium · GPS · 40/44mm · S8 Chip</div>
+      <div class="card-price"><span>Від</span>7 990 ₴</div>
+      <button class="card-btn" onclick="openModalSimple('Apple Watch SE (2)','⌚','Найдоступніший Apple Watch з сучасним чіпом S8. Виявлення аварій, моніторинг серцебиття, GPS.','7 990 ₴')">До Кошика</button>
+    </div>
+
+    <div class="product-card">
+      <div class="card-img">⌚</div>
+      <div class="card-model">Apple Watch Series 9</div>
+      <div class="card-tag">Aluminium · GPS · Double Tap · S9 Chip</div>
+      <div class="card-price"><span>Від</span>11 990 ₴</div>
+      <button class="card-btn" onclick="openModalSimple('Apple Watch Series 9','⌚','Чіп S9, жест Double Tap пальцями без торкання екрану. Яскравіший дисплей 2000 ніт, UWB 2 покоління.','11 990 ₴')">До Кошика</button>
+    </div>
+
+  </div>
+</section>
+
+<div class="neon-line-h"></div>
+
+<!-- SERVICE CENTER -->
+<section id="service" style="padding: 6rem 5%; background: var(--bg2); border-top: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04);">
+  <div style="max-width: 1200px; margin: auto;">
+    <div class="section-header">
+      <span class="section-label">// Сервіс</span>
+      <h2 class="section-title">Ремонт Гаджетів</h2>
+      <div class="neon-divider"></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 3rem;">
+
+      <div class="service-card" style="gap: 0.8rem;">
+        <div class="service-icon">📱</div>
+        <div class="service-label">// iPhone / iPad</div>
+        <h3 class="service-title" style="font-size: 1.3rem;">Ремонт Apple</h3>
+        <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.3rem;">
+          <li class="repair-item">🔋 Заміна акумулятора</li>
+          <li class="repair-item">📺 Заміна дисплея / скла</li>
+          <li class="repair-item">📸 Ремонт камери</li>
+          <li class="repair-item">🔌 Ремонт роз'єму зарядки</li>
+          <li class="repair-item">💧 Відновлення після води</li>
+          <li class="repair-item">🔊 Ремонт динаміка / мікрофона</li>
+        </ul>
+        <button class="btn-primary" style="align-self: flex-start; margin-top: 1rem;" onclick="window.open('https://t.me/arbuz_store')">Записатись →</button>
+      </div>
+
+      <div class="service-card" style="gap: 0.8rem;">
+        <div class="service-icon">💻</div>
+        <div class="service-label">// MacBook / iMac</div>
+        <h3 class="service-title" style="font-size: 1.3rem;">Ремонт Mac</h3>
+        <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.3rem;">
+          <li class="repair-item">🔋 Заміна акумулятора MacBook</li>
+          <li class="repair-item">⌨️ Ремонт / заміна клавіатури</li>
+          <li class="repair-item">📺 Заміна матриці / дисплея</li>
+          <li class="repair-item">💾 Відновлення даних SSD</li>
+          <li class="repair-item">🧠 Ремонт материнської плати</li>
+          <li class="repair-item">❄️ Чистка від пилу / термопаста</li>
+        </ul>
+        <button class="btn-primary" style="align-self: flex-start; margin-top: 1rem;" onclick="window.open('https://t.me/arbuz_store')">Записатись →</button>
+      </div>
+
+    </div>
+
+    <!-- Service advantages -->
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border);">
+      <div class="perk" style="padding: 1.8rem;">
+        <div class="perk-icon" style="font-size:1.1rem;">⚡</div>
+        <h4>Термінова Діагностика</h4>
+        <p>Безкоштовно</p>
+      </div>
+      <div class="perk" style="padding: 1.8rem;">
+        <div class="perk-icon" style="font-size:1.1rem;">🛡</div>
+        <h4>Гарантія на Ремонт</h4>
+        <p>До 3 місяців</p>
+      </div>
+      <div class="perk" style="padding: 1.8rem;">
+        <div class="perk-icon" style="font-size:1.1rem;">🔩</div>
+        <h4>Оригінальні Запчастини</h4>
+        <p>Тільки якісні деталі</p>
+      </div>
+      <div class="perk" style="padding: 1.8rem;">
+        <div class="perk-icon" style="font-size:1.1rem;">📍</div>
+        <h4>Одеса, Starosinna 1A</h4>
+        <p>093-019-31-30</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="neon-line-h"></div>
+<section class="services" id="tradein">
+  <div class="services-inner">
+    <div class="section-header">
+      <span class="section-label">// Сервіси</span>
+      <h2 class="section-title">Вигідні Умови</h2>
+      <div class="neon-divider"></div>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🔄</div>
+        <div class="service-label">// Trade-In</div>
+        <h3 class="service-title">Здай старий —<br>Отримай знижку</h3>
+        <p class="service-desc">Оцінимо твій пристрій онлайн за 2 хвилини. Реальна ціна без занижень. Знижка одразу на новий iPhone.</p>
+        <button class="btn-primary" style="align-self: flex-start; margin-top: 0.5rem;" onclick="window.open('https://t.me/arbuz_store')">Оцінити Свій →</button>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">💳</div>
+        <div class="service-label">// Розстрочка</div>
+        <h3 class="service-title">Купуй без<br>першого внеску</h3>
+        <p class="service-desc">Розстрочка 0% від 3 до 24 місяців. Без прихованих комісій. Рішення за 15 хвилин прямо у магазині.</p>
+        <button class="btn-primary" style="align-self: flex-start; margin-top: 0.5rem;" onclick="window.open('https://t.me/arbuz_store')">Оформити →</button>
+      </div>
+    </div>
+
+    <!-- TRADE-IN CALCULATOR -->
+    <div class="tradein-calc">
+      <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--neon);margin-bottom:0.8rem;">// Онлайн-оцінювач Trade-In</div>
+      <h3 style="font-size:1.3rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:var(--white);margin-bottom:0.5rem;">Дізнайся вартість свого iPhone за 30 секунд</h3>
+      <p style="font-size:0.72rem;color:rgba(224,224,224,0.5);letter-spacing:0.06em;margin-bottom:1.5rem;">Оберіть модель і стан — отримайте орієнтовну ціну викупу</p>
+      <select class="tradein-select" onchange="tiSelectModel(this)">
+        <option value="">— Оберіть модель iPhone —</option>
+        <option>iPhone 17 Pro Max</option>
+        <option>iPhone 17 Pro</option>
+        <option>iPhone 16 Pro Max</option>
+        <option>iPhone 16 Pro</option>
+        <option>iPhone 15 Pro Max</option>
+        <option>iPhone 15 Pro</option>
+        <option>iPhone 14 Pro Max</option>
+        <option>iPhone 14 Pro</option>
+        <option>iPhone 13 Pro Max</option>
+        <option>iPhone 13 Pro</option>
+        <option>iPhone 13</option>
+        <option>iPhone 12</option>
+      </select>
+      <div style="font-size:0.6rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(224,224,224,0.45);margin-bottom:0.7rem;">Стан пристрою:</div>
+      <div class="tradein-conditions">
+        <button class="cond-btn" onclick="tiSelectCond(this,'perfect')">⭐ Ідеальний<br><span style="font-size:0.55rem;opacity:0.6">Без подряпин</span></button>
+        <button class="cond-btn" onclick="tiSelectCond(this,'good')">👍 Хороший<br><span style="font-size:0.55rem;opacity:0.6">Мікроподряпини</span></button>
+        <button class="cond-btn" onclick="tiSelectCond(this,'fair')">🔧 Задовільний<br><span style="font-size:0.55rem;opacity:0.6">Помітні сліди</span></button>
+      </div>
+      <div class="tradein-result" id="tradeinResult">
+        <div style="font-size:0.6rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(224,224,224,0.4);margin-bottom:0.5rem;">Орієнтовна вартість викупу</div>
+        <div class="tradein-result-price" id="tradeinPrice">0 ₴</div>
+        <div class="tradein-result-label">Фінальна ціна уточнюється при огляді пристрою</div>
+        <button class="btn-primary" style="margin-top:1.2rem;" onclick="window.open('https://t.me/arbuz_store','_blank')">✈️ Отримати пропозицію в Telegram</button>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews-section" style="background:var(--bg2); border-top:1px solid rgba(255,255,255,0.04);">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="section-header">
+      <span class="section-label" data-uk="// Відгуки клієнтів" data-en="// Customer Reviews">// Відгуки клієнтів</span>
+      <h2 class="section-title" data-uk="Що кажуть наші клієнти" data-en="What our clients say">Що кажуть наші клієнти</h2>
+      <div class="neon-divider"></div>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-platform">Instagram</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text" data-uk="Купував iPhone 16 Pro Max — все чудово! Ціна краща ніж у офіційному магазині, все оригінальне, упакування ціле. Хлопці швидко відповіли в Telegram і допомогли з вибором кольору. Рекомендую!" data-en="Bought iPhone 16 Pro Max — everything is great! Price is better than the official store, all original, packaging intact. The guys responded quickly on Telegram and helped with color choice. Highly recommend!">Купував iPhone 16 Pro Max — все чудово! Ціна краща ніж у офіційному магазині, все оригінальне, упакування ціле. Хлопці швидко відповіли в Telegram і допомогли з вибором кольору. Рекомендую!</p>
+        <div class="review-author">
+          <div class="review-avatar">М</div>
+          <div>
+            <div class="review-name">Максим Д.</div>
+            <div class="review-date" data-uk="2 тижні тому · Одеса" data-en="2 weeks ago · Odesa">2 тижні тому · Одеса</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-platform">Telegram</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text" data-uk="Здала старий iPhone 13 в Trade-In, отримала хорошу знижку на 15 Pro. Весь процес зайняв 20 хвилин. Дуже зручно і чесно — оцінили саме стільки скільки обіцяли. Дівчата, беріть тут!" data-en="Traded in my old iPhone 13, got a great discount on 15 Pro. The whole process took 20 minutes. Very convenient and honest — they valued it exactly as promised. Girls, get yours here!">Здала старий iPhone 13 в Trade-In, отримала хорошу знижку на 15 Pro. Весь процес зайняв 20 хвилин. Дуже зручно і чесно — оцінили саме стільки скільки обіцяли. Дівчата, беріть тут!</p>
+        <div class="review-author">
+          <div class="review-avatar">А</div>
+          <div>
+            <div class="review-name">Аліна К.</div>
+            <div class="review-date" data-uk="1 місяць тому · Одеса" data-en="1 month ago · Odesa">1 місяць тому · Одеса</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-platform">Google</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text" data-uk="Купив MacBook Air M3 для роботи. Ціна нижча ніж у Rozetka, доставка по Одесі за день. Ремонтував у них же навушники — теж все окей. Живий магазин з живими людьми, не якийсь онлайн-фантом." data-en="Bought MacBook Air M3 for work. Price lower than Rozetka, delivery within Odesa in one day. Also repaired headphones there — all good. A real store with real people, not some online ghost.">Купив MacBook Air M3 для роботи. Ціна нижча ніж у Rozetka, доставка по Одесі за день. Ремонтував у них же навушники — теж все окей. Живий магазин з живими людьми, не якийсь онлайн-фантом.</p>
+        <div class="review-author">
+          <div class="review-avatar">В</div>
+          <div>
+            <div class="review-name">Владислав Т.</div>
+            <div class="review-date" data-uk="3 тижні тому · Одеса" data-en="3 weeks ago · Odesa">3 тижні тому · Одеса</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-platform">Instagram</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text" data-uk="Брала AirPods Pro 2 в подарунок чоловіку. Упаковка шикарна, все оригінальне з перевіркою. Хлопці навіть підказали як перевірити серійний номер на сайті Apple. Такого сервісу не чекала!" data-en="Got AirPods Pro 2 as a gift for my husband. Packaging is gorgeous, everything original with verification. The guys even showed how to check the serial number on Apple's site. Didn't expect such service!">Брала AirPods Pro 2 в подарунок чоловіку. Упаковка шикарна, все оригінальне з перевіркою. Хлопці навіть підказали як перевірити серійний номер на сайті Apple. Такого сервісу не чекала!</p>
+        <div class="review-author">
+          <div class="review-avatar">О</div>
+          <div>
+            <div class="review-name">Олена М.</div>
+            <div class="review-date" data-uk="5 днів тому · Одеса" data-en="5 days ago · Odesa">5 днів тому · Одеса</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-platform">Telegram</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text" data-uk="Вживаний iPhone 14 Pro купив тут — стан ідеальний, навіть не скажеш що вживаний. Гарантія 3 місяці від магазину. Порівнював з Jabko і Citrus — у Arbuz дешевше і відповіли одразу." data-en="Bought a used iPhone 14 Pro here — condition is perfect, you wouldn't even know it's used. 3-month warranty from the store. Compared with Jabko and Citrus — Arbuz is cheaper and replied immediately.">Вживаний iPhone 14 Pro купив тут — стан ідеальний, навіть не скажеш що вживаний. Гарантія 3 місяці від магазину. Порівнював з Jabko і Citrus — у Arbuz дешевше і відповіли одразу.</p>
+        <div class="review-author">
+          <div class="review-avatar">Д</div>
+          <div>
+            <div class="review-name">Денис Р.</div>
+            <div class="review-date" data-uk="1 тиждень тому · Одеса" data-en="1 week ago · Odesa">1 тиждень тому · Одеса</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-platform">Google</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text" data-uk="iPad Air для дочки на день народження — подарунок вдався! Розстрочка 0% на 12 місяців, ніяких переплат. Оформили за 15 хвилин прямо в магазині. Окремий респект за оперативність і чесність." data-en="iPad Air for daughter's birthday — the gift was a hit! 0% installment for 12 months, no overpayments. Set up in 15 minutes right in the store. Special thanks for speed and honesty.">iPad Air для дочки на день народження — подарунок вдався! Розстрочка 0% на 12 місяців, ніяких переплат. Оформили за 15 хвилин прямо в магазині. Окремий респект за оперативність і чесність.</p>
+        <div class="review-author">
+          <div class="review-avatar">С</div>
+          <div>
+            <div class="review-name">Сергій В.</div>
+            <div class="review-date" data-uk="2 місяці тому · Одеса" data-en="2 months ago · Odesa">2 місяці тому · Одеса</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:2.5rem;">
+      <a href="https://www.instagram.com/arbuz.store.ua/" target="_blank" class="btn-outline" data-uk="Більше відгуків в Instagram →" data-en="More reviews on Instagram →">Більше відгуків в Instagram →</a>
+    </div>
+  </div>
+</section>
+
+<div class="neon-line-h"></div>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-inner">
+    <div class="stat">
+      <span class="stat-num">11</span>
+      <span class="stat-label">Років на Ринку</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">4192+</span>
+      <span class="stat-label">Задоволених Клієнтів</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">495</span>
+      <span class="stat-label">Публікацій в Instagram</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">0%</span>
+      <span class="stat-label">Розстрочка до 24 міс</span>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why" style="padding-top: 6rem; padding-bottom: 6rem; max-width: 1200px; margin: auto; padding-left: 5%; padding-right: 5%;">
+  <div class="section-header">
+    <span class="section-label">// Чому Ми</span>
+    <h2 class="section-title">Arbuz Store —<br>Цифровий Гаджет-Простір</h2>
+    <div class="neon-divider"></div>
+  </div>
+
+  <div class="why-grid">
+    <div class="why-card">
+      <span class="why-num">01</span>
+      <div class="why-content">
+        <span class="why-accent"></span>
+        <h3>Нові та Вживані<br>Пристрої з Гарантією</h3>
+      </div>
+    </div>
+    <div class="why-card">
+      <span class="why-num">02</span>
+      <div class="why-content">
+        <span class="why-accent"></span>
+        <h3>Ремонт Гаджетів<br>Одеса, Starosinna 1A</h3>
+      </div>
+    </div>
+    <div class="why-card">
+      <span class="why-num">03</span>
+      <div class="why-content">
+        <span class="why-accent"></span>
+        <h3>Вигідний Обмін<br>та Розстрочка 0%</h3>
+      </div>
+    </div>
+    <div class="why-card">
+      <span class="why-num">04</span>
+      <div class="why-content">
+        <span class="why-accent"></span>
+        <h3>Доставка по<br>Всій Країні 🇺🇦</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <div style="width:44px;height:44px;background:linear-gradient(135deg,#e74c3c,#c0392b);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;box-shadow:0 0 16px rgba(231,76,60,0.5)">🍉</div>
+      Arbuz Store
+    </div>
+    <p class="footer-tagline">Нові та вживані пристрої з гарантією · з 2015 Року</p>
+    <div style="display:flex; gap:2rem; justify-content:center; flex-wrap:wrap; margin-bottom:1.5rem;">
+      <div style="font-size:0.65rem; letter-spacing:0.14em; text-transform:uppercase; color:rgba(224,224,224,0.45);">📍 Одеса, Starosinna 1A</div>
+      <div style="font-size:0.65rem; letter-spacing:0.14em; text-transform:uppercase; color:rgba(224,224,224,0.45);">📞 <a href="tel:+380930193130" style="color:var(--neon); text-decoration:none;">093-019-31-30</a></div>
+      <div style="font-size:0.65rem; letter-spacing:0.14em; text-transform:uppercase; color:rgba(224,224,224,0.45);">🇺🇦 Доставка по всій країні</div>
+    </div>
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/arbuz.store.ua/" target="_blank" class="social-btn">
+        <span>📷</span> Instagram
+      </a>
+      <a href="https://t.me/arbuz_store" target="_blank" class="social-btn">
+        <span>✈️</span> Telegram
+      </a>
+      <a href="tel:+380930193130" class="social-btn">
+        <span>📞</span> Зателефонувати
+      </a>
+    </div>
+    <p class="footer-copy">© 2026 Arbuz Store · Гаджети та Аксесуари · Одеса, Україна · arbuz.store.ua</p>
+  </div>
+</footer>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" style="max-height:90vh; overflow-y:auto;">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-img" id="modalImg">📱</div>
+    <div class="modal-title" id="modalTitle">iPhone 17 Pro</div>
+    <p class="modal-desc" id="modalDesc">Один із найпопулярніших смартфонів у світі. OLED-магія, потужність процесора Apple та камера з підтримкою нічного режиму.</p>
+    <span class="config-label" id="modalConfigLabel">// Вибір Конфігурації</span>
+    <div class="config-options" id="modalConfigOptions">
+      <button class="config-opt active" onclick="selectConfig(this,'0')">
+        256 GB<span class="opt-price" id="price256">49 990 ₴</span>
+      </button>
+      <button class="config-opt" onclick="selectConfig(this,'10000')">
+        512 GB<span class="opt-price" id="price512">59 990 ₴</span>
+      </button>
+      <button class="config-opt" onclick="selectConfig(this,'20000')">
+        1 TB<span class="opt-price" id="price1tb">69 990 ₴</span>
+      </button>
+    </div>
+    <div id="simplePriceRow" style="display:none;align-items:center;justify-content:space-between;margin-bottom:2rem;padding:1.2rem 1.5rem;border:1px solid var(--border);background:rgba(1,119,237,0.05);">
+      <span style="font-size:0.65rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(224,224,224,0.5);" data-uk="Ціна" data-en="Price">Ціна</span>
+      <span id="simplePrice" style="font-size:1.4rem;font-weight:900;color:var(--neon);text-shadow:var(--neon-glow);letter-spacing:0.06em;"></span>
+    </div>
+    <div style="display:flex;gap:0.75rem;flex-direction:column;">
+      <button class="btn-primary" style="width:100%;justify-content:center;" onclick="addToCartFromModal()">
+        🛒 &nbsp;<span data-uk="Додати до кошика" data-en="Add to cart">Додати до кошика</span>
+      </button>
+      <button class="btn-outline" style="width:100%;text-align:center;justify-content:center;" onclick="window.open('https://t.me/arbuz_store','_blank')">
+        ✈️ &nbsp;<span data-uk="Запитати в Telegram" data-en="Ask on Telegram">Запитати в Telegram</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+/* ============================================================
+   ARBUZ STORE — FULL FEATURED JS
+   1. Language switcher (UA/EN)
+   2. Live search
+   3. Cart system
+   4. Order via Telegram Bot
+   5. Trade-In calculator
+   6. Sticky Telegram button
+   7. WOW effects (particles, cursor, scroll reveal, counters, tilt)
+   ============================================================ */
+
+/* ── TELEGRAM BOT CONFIG ─────────────────────────────────── */
+const TG_BOT_TOKEN = 'YOUR_BOT_TOKEN'; // Замінити на реальний токен
+const TG_CHAT_ID   = 'YOUR_CHAT_ID';   // Замінити на реальний chat_id
+
+/* ── PRODUCT CATALOG (для пошуку і кошика) ──────────────── */
+const CATALOG = [
+  { id:1,  name:'iPhone 17 Pro Max', nameEn:'iPhone 17 Pro Max', icon:'📱', tag:'Titanium · A19 · 48MP ProRes',  price:69990, cat:'iphone', condition:'new'  },
+  { id:2,  name:'iPhone 17 Pro',     nameEn:'iPhone 17 Pro',     icon:'📱', tag:'Titanium · A19 · Нічний режим',price:54990, cat:'iphone', condition:'new'  },
+  { id:3,  name:'iPhone Air',        nameEn:'iPhone Air',        icon:'📱', tag:'Найтонший iPhone · 6.9" OLED', price:44990, cat:'iphone', condition:'new'  },
+  { id:4,  name:'iPhone 16 Pro',     nameEn:'iPhone 16 Pro',     icon:'📱', tag:'Desert Titanium · 48MP · USB-C',price:41990,cat:'iphone', condition:'new'  },
+  { id:5,  name:'iPhone 16 Pro Max (вживаний)', nameEn:'iPhone 16 Pro Max (used)', icon:'📱', tag:'256GB/512GB · Стан A/A+', price:38990, cat:'iphone', condition:'used' },
+  { id:6,  name:'iPhone 15 Pro Max (вживаний)', nameEn:'iPhone 15 Pro Max (used)', icon:'📱', tag:'Titanium · Гарантія 3 міс', price:29990, cat:'iphone', condition:'used' },
+  { id:7,  name:'iPhone 14 Pro Max (вживаний)', nameEn:'iPhone 14 Pro Max (used)', icon:'📱', tag:'Dynamic Island · Стан A',   price:22990, cat:'iphone', condition:'used' },
+  { id:8,  name:'iPhone 13 Pro (вживаний)',      nameEn:'iPhone 13 Pro (used)',     icon:'📱', tag:'ProMotion 120Hz · 3 камери', price:14990, cat:'iphone', condition:'used' },
+  { id:9,  name:'MacBook Pro 16"',   nameEn:'MacBook Pro 16"',   icon:'💻', tag:'M4 Pro · 24GB · 512GB',         price:109990,cat:'mac',   condition:'new'  },
+  { id:10, name:'MacBook Pro 14"',   nameEn:'MacBook Pro 14"',   icon:'💻', tag:'M4 · 16GB · 512GB',             price:79990, cat:'mac',   condition:'new'  },
+  { id:11, name:'MacBook Air 15"',   nameEn:'MacBook Air 15"',   icon:'💻', tag:'M3 · 16GB · 256GB',             price:59990, cat:'mac',   condition:'new'  },
+  { id:12, name:'MacBook Air 13"',   nameEn:'MacBook Air 13"',   icon:'💻', tag:'M3 · 8GB · 256GB',              price:44990, cat:'mac',   condition:'new'  },
+  { id:13, name:'iPad Pro 13"',      nameEn:'iPad Pro 13"',      icon:'📟', tag:'M4 · Ultra Retina XDR · OLED',  price:54990, cat:'ipad',  condition:'new'  },
+  { id:14, name:'iPad Pro 11"',      nameEn:'iPad Pro 11"',      icon:'📟', tag:'M4 · Ultra Retina XDR · OLED',  price:39990, cat:'ipad',  condition:'new'  },
+  { id:15, name:'iPad Air 11" M4',   nameEn:'iPad Air 11" M4',   icon:'📟', tag:'M4 (2026) · 256GB Wi-Fi+LTE',  price:40600, cat:'ipad',  condition:'new'  },
+  { id:16, name:'iPad 10"',          nameEn:'iPad 10"',          icon:'📟', tag:'A14 Bionic · USB-C',            price:14990, cat:'ipad',  condition:'new'  },
+  { id:17, name:'Apple Watch Ultra 2',nameEn:'Apple Watch Ultra 2',icon:'⌚',tag:'49mm · Titanium · 60h GPS',    price:29990, cat:'watch', condition:'new'  },
+  { id:18, name:'Apple Watch Series 10',nameEn:'Apple Watch Series 10',icon:'⌚',tag:'42mm/46mm · AMOLED',       price:14990, cat:'watch', condition:'new'  },
+  { id:19, name:'AirPods Pro 2',     nameEn:'AirPods Pro 2',     icon:'🎧', tag:'ANC · MagSafe · USB-C',         price:8990,  cat:'audio', condition:'new'  },
+  { id:20, name:'AirPods Max',       nameEn:'AirPods Max',       icon:'🎧', tag:'Over-Ear · ANC · 40h',          price:18990, cat:'audio', condition:'new'  },
+  { id:21, name:'Apple Silicone Case',nameEn:'Apple Silicone Case',icon:'🛡️',tag:'iPhone 15–17 · MagSafe',      price:1190,  cat:'acc',   condition:'new'  },
+  { id:22, name:'Apple 30W USB-C',   nameEn:'Apple 30W USB-C',   icon:'🔌', tag:'30W · Оригінал',               price:890,   cat:'acc',   condition:'new'  },
+  { id:23, name:'Anker MagGo 10K',   nameEn:'Anker MagGo 10K',   icon:'🔋', tag:'MagSafe · 15W · 10 000 mAh',  price:1990,  cat:'power', condition:'new'  },
+];
+
+const CART_STORAGE_KEY = 'arbuzStoreCartV1';
+
+function escapeHtml(value) {
+  return String(value ?? '').replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  }[char]));
+}
+
+function escapeRegExp(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function formatPrice(value) {
+  return Number(value || 0).toLocaleString('uk-UA') + ' ₴';
+}
+
+function parsePrice(value) {
+  return Number(String(value ?? '').replace(/\D/g, '')) || 0;
+}
+
+function isValidPhone(value) {
+  const digits = value.replace(/\D/g, '');
+  return digits.length >= 10 && digits.length <= 13;
+}
+
+function saveCart() {
+  try {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+  } catch(e) {}
+}
+
+function loadCart() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(CART_STORAGE_KEY) || '[]');
+    if (Array.isArray(saved)) cart = saved.filter(item => item && item.id && item.unitPrice);
+  } catch(e) {
+    cart = [];
+  }
+}
+
+function showOrderError(message) {
+  const error = document.getElementById('orderError');
+  if (!error) return;
+  error.textContent = message;
+  error.classList.toggle('show', Boolean(message));
+}
+
+/* ── LANGUAGE ────────────────────────────────────────────── */
+let currentLang = 'uk';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.getElementById('langUk').classList.toggle('active', lang === 'uk');
+  document.getElementById('langEn').classList.toggle('active', lang === 'en');
+  document.documentElement.lang = lang === 'uk' ? 'uk' : 'en';
+
+  // Update all data-uk / data-en text nodes
+  document.querySelectorAll('[data-uk]').forEach(el => {
+    el.textContent = lang === 'uk' ? el.dataset.uk : el.dataset.en;
+  });
+
+  // Update placeholders
+  document.querySelectorAll('[data-uk-placeholder]').forEach(el => {
+    el.placeholder = lang === 'uk' ? el.dataset.ukPlaceholder : el.dataset.enPlaceholder;
+  });
+
+  // Nav links
+  document.querySelectorAll('#mainNav a[data-uk]').forEach(el => {
+    el.textContent = lang === 'uk' ? el.dataset.uk : el.dataset.en;
+  });
+}
+
+/* ── LIVE SEARCH ─────────────────────────────────────────── */
+const searchInput   = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+
+searchInput.addEventListener('input', function() {
+  const q = this.value.trim().toLowerCase();
+  if (q.length < 2) { searchResults.classList.remove('open'); return; }
+
+  const hits = CATALOG.filter(p => {
+    const name = currentLang === 'uk' ? p.name : p.nameEn;
+    return name.toLowerCase().includes(q) || p.tag.toLowerCase().includes(q);
+  }).slice(0, 7);
+
+  if (!hits.length) {
+    searchResults.innerHTML = `<div class="search-empty">${currentLang==='uk'?'Нічого не знайдено':'Nothing found'}</div>`;
+  } else {
+    searchResults.innerHTML = hits.map(p => {
+      const name = currentLang === 'uk' ? p.name : p.nameEn;
+      const safeName = escapeHtml(name);
+      const hi = safeName.replace(new RegExp(`(${escapeRegExp(q)})`, 'gi'), '<span class="search-highlight">$1</span>');
+      return `<div class="search-item" onclick="searchSelect(${p.id})">
+        <div class="search-item-icon">${escapeHtml(p.icon)}</div>
+        <div class="search-item-info">
+          <div class="search-item-name">${hi}</div>
+          <div class="search-item-tag">${escapeHtml(p.tag)}</div>
+        </div>
+        <div class="search-item-price">${formatPrice(p.price)}</div>
+      </div>`;
+    }).join('');
+  }
+  searchResults.classList.add('open');
+});
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.search-wrap')) searchResults.classList.remove('open');
+});
+
+['orderName', 'orderPhone', 'orderComment'].forEach(id => {
+  const field = document.getElementById(id);
+  if (!field) return;
+  field.addEventListener('input', () => {
+    field.style.borderColor = '';
+    showOrderError('');
+  });
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  document.getElementById('modalOverlay')?.classList.remove('active');
+  if (document.getElementById('cartDrawer')?.classList.contains('open')) toggleCart();
+  searchResults.classList.remove('open');
+});
+
+function searchSelect(id) {
+  const p = CATALOG.find(x => x.id === id);
+  if (!p) return;
+  searchResults.classList.remove('open');
+  searchInput.value = '';
+  openModalSimple(currentLang==='uk'?p.name:p.nameEn, p.icon, p.tag, p.price.toLocaleString('uk-UA') + ' ₴', p);
+}
+
+/* ── CART ────────────────────────────────────────────────── */
+let cart = [];
+let currentModalProduct = null;
+
+function toggleCart() {
+  const drawer  = document.getElementById('cartDrawer');
+  const overlay = document.getElementById('cartOverlay');
+  const open    = drawer.classList.toggle('open');
+  overlay.classList.toggle('open', open);
+}
+
+function addToCart(product, variantLabel, variantPrice) {
+  const existing = cart.find(i => i.id === product.id && i.variant === variantLabel);
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ ...product, variant: variantLabel, unitPrice: variantPrice, qty: 1 });
+  }
+  renderCart();
+  updateCartBadge();
+  saveCart();
+  showAddedFeedback();
+}
+
+function removeFromCart(idx) {
+  cart.splice(idx, 1);
+  renderCart();
+  updateCartBadge();
+  saveCart();
+}
+
+function changeCartQty(idx, delta) {
+  if (!cart[idx]) return;
+  cart[idx].qty += delta;
+  if (cart[idx].qty <= 0) {
+    cart.splice(idx, 1);
+  }
+  renderCart();
+  updateCartBadge();
+  saveCart();
+}
+
+function renderCart() {
+  const container = document.getElementById('cartItems');
+  const footer    = document.getElementById('cartFooter');
+
+  if (!cart.length) {
+    container.innerHTML = `
+      <div class="cart-empty-state" id="cartEmpty">
+        <div class="big-icon">🛒</div>
+        <p data-uk="Кошик порожній.<br>Оберіть товар у каталозі." data-en="Cart is empty.<br>Choose a product from catalog.">
+          ${currentLang === 'uk' ? 'Кошик порожній.<br>Оберіть товар у каталозі.' : 'Cart is empty.<br>Choose a product from catalog.'}
+        </p>
+      </div>`;
+    footer.style.display = 'none';
+    document.getElementById('orderForm').style.display = 'flex';
+    document.getElementById('orderSuccess').style.display = 'none';
+    showOrderError('');
+    return;
+  }
+
+  footer.style.display = 'block';
+
+  const items = cart.map((item, i) => `
+    <div class="cart-item">
+      <div class="cart-item-icon">${escapeHtml(item.icon)}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${escapeHtml(currentLang==='uk'?item.name:item.nameEn)}</div>
+        <div class="cart-item-sub">${escapeHtml(item.variant || '')}</div>
+        <div class="cart-item-meta">
+          <div class="cart-qty" aria-label="Кількість">
+            <button type="button" onclick="changeCartQty(${i}, -1)" aria-label="Зменшити кількість">−</button>
+            <span>${item.qty}</span>
+            <button type="button" onclick="changeCartQty(${i}, 1)" aria-label="Збільшити кількість">+</button>
+          </div>
+          <div class="cart-item-line-total">${formatPrice(item.unitPrice * item.qty)}</div>
+        </div>
+      </div>
+      <div class="cart-item-price">${formatPrice(item.unitPrice)}</div>
+      <button class="cart-item-del" onclick="removeFromCart(${i})">✕</button>
+    </div>
+  `).join('');
+
+  container.innerHTML = items;
+
+  const total = cart.reduce((s, i) => s + i.unitPrice * i.qty, 0);
+  document.getElementById('cartTotal').textContent = formatPrice(total);
+}
+
+function updateCartBadge() {
+  const cnt   = document.getElementById('cartCount');
+  const total = cart.reduce((s, i) => s + i.qty, 0);
+  cnt.textContent = total;
+  cnt.classList.toggle('visible', total > 0);
+}
+
+function showAddedFeedback() {
+  const btn = document.querySelector('.cart-btn-header');
+  btn.style.borderColor = '#22c55e';
+  btn.style.boxShadow = '0 0 12px rgba(34,197,94,0.5)';
+  setTimeout(() => { btn.style.borderColor = ''; btn.style.boxShadow = ''; }, 800);
+}
+
+/* ── ORDER VIA TELEGRAM BOT ──────────────────────────────── */
+async function submitOrder() {
+  const name    = document.getElementById('orderName').value.trim();
+  const phone   = document.getElementById('orderPhone').value.trim();
+  const comment = document.getElementById('orderComment').value.trim();
+  showOrderError('');
+
+  if (!cart.length) {
+    showOrderError(currentLang === 'uk' ? 'Додайте товар у кошик перед оформленням.' : 'Add a product to cart before placing an order.');
+    return;
+  }
+
+  if (!name || !phone || !isValidPhone(phone)) {
+    document.getElementById('orderName').style.borderColor  = !name  ? '#e74c3c' : '';
+    document.getElementById('orderPhone').style.borderColor = (!phone || !isValidPhone(phone)) ? '#e74c3c' : '';
+    showOrderError(currentLang === 'uk'
+      ? 'Вкажіть імʼя та коректний номер телефону.'
+      : 'Please enter your name and a valid phone number.');
+    return;
+  }
+
+  const orderList = cart.map(i =>
+    `• ${currentLang==='uk'?i.name:i.nameEn}${i.variant?' ('+i.variant+')':''} — ${formatPrice(i.unitPrice)} × ${i.qty}`
+  ).join('\n');
+
+  const total = cart.reduce((s, i) => s + i.unitPrice * i.qty, 0);
+
+  const text = `🛒 НОВЕ ЗАМОВЛЕННЯ — Arbuz Store\n\n` +
+    `👤 Ім'я: ${name}\n📞 Телефон: ${phone}\n` +
+    (comment ? `💬 Коментар: ${comment}\n` : '') +
+    `\n📦 Товари:\n${orderList}\n\n` +
+    `💰 Сума: ${formatPrice(total)}\n` +
+    `⏰ ${new Date().toLocaleString('uk-UA')}`;
+
+  document.getElementById('orderForm').style.display    = 'none';
+  document.getElementById('orderSending').style.display = 'block';
+
+  let sentToBot = false;
+
+  try {
+    if (TG_BOT_TOKEN !== 'YOUR_BOT_TOKEN' && TG_CHAT_ID !== 'YOUR_CHAT_ID') {
+      await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: TG_CHAT_ID, text, parse_mode: 'HTML' })
+      });
+      sentToBot = true;
+    }
+  } catch(e) {
+    sentToBot = false;
+  }
+
+  if (!sentToBot) {
+    const shareText = encodeURIComponent(text);
+    window.open(`https://t.me/share/url?url=https://t.me/arbuz_store&text=${shareText}`, '_blank');
+  }
+
+  document.getElementById('orderSending').style.display = 'none';
+  document.getElementById('orderSuccess').style.display = 'block';
+  cart = [];
+  saveCart();
+  updateCartBadge();
+}
+
+/* ── PRODUCT MODAL ───────────────────────────────────────── */
+let basePrice = 49990;
+
+function openModalSimple(title, icon, desc, price, productObj) {
+  currentModalProduct = productObj || { name: title, nameEn: title, icon, tag: desc, price: parsePrice(price), id: Date.now() };
+  document.getElementById('modalOverlay').classList.add('active');
+  document.getElementById('modalTitle').textContent  = title;
+  document.getElementById('modalImg').textContent    = icon;
+  document.getElementById('modalDesc').textContent   = desc;
+  document.getElementById('modalConfigLabel').style.display  = 'none';
+  document.getElementById('modalConfigOptions').style.display = 'none';
+  document.getElementById('simplePriceRow').style.display    = 'flex';
+  document.getElementById('simplePrice').textContent = price;
+}
+
+function openModal(model, price) {
+  currentModalProduct = CATALOG.find(p => p.name === model) || { name: model, nameEn: model, icon:'📱', tag:'', price: parsePrice(price), id: Date.now() };
+  document.getElementById('modalConfigLabel').style.display   = 'block';
+  document.getElementById('modalConfigOptions').style.display = 'flex';
+  document.getElementById('simplePriceRow').style.display     = 'none';
+  document.getElementById('modalImg').textContent    = '📱';
+  document.getElementById('modalDesc').textContent   = currentLang==='uk'
+    ? 'Один із найпопулярніших смартфонів у світі. OLED-магія, потужність процесора Apple та камера з підтримкою нічного режиму.'
+    : 'One of the most popular smartphones in the world. OLED magic, Apple chip performance and a camera with Night Mode support.';
+  document.getElementById('modalOverlay').classList.add('active');
+  if (model) document.getElementById('modalTitle').textContent = model;
+  if (price) { basePrice = parsePrice(price); updatePrices(); }
+}
+
+function updatePrices() {
+  document.getElementById('price256').textContent = formatPrice(basePrice);
+  document.getElementById('price512').textContent = formatPrice(basePrice + 10000);
+  document.getElementById('price1tb').textContent  = formatPrice(basePrice + 20000);
+}
+
+function closeModal(e) {
+  if (!e || e.target === document.getElementById('modalOverlay'))
+    document.getElementById('modalOverlay').classList.remove('active');
+}
+
+function selectConfig(btn, extra) {
+  document.querySelectorAll('.config-opt').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function addToCartFromModal() {
+  if (!currentModalProduct) return;
+  // Get selected config if visible
+  const configVisible = document.getElementById('modalConfigOptions').style.display !== 'none';
+  let variantLabel = '';
+  let variantPrice = currentModalProduct.price || basePrice;
+
+  if (configVisible) {
+    const active = document.querySelector('.config-opt.active');
+    if (active) {
+      variantLabel = active.childNodes[0].textContent.trim();
+      variantPrice = parsePrice(active.querySelector('.opt-price').textContent) || basePrice;
+    }
+  } else {
+    const sp = document.getElementById('simplePrice').textContent;
+    variantPrice = parsePrice(sp) || currentModalProduct.price;
+  }
+
+  addToCart(currentModalProduct, variantLabel, variantPrice);
+  document.getElementById('modalOverlay').classList.remove('active');
+
+  // Auto-open cart after adding
+  setTimeout(() => {
+    const drawer = document.getElementById('cartDrawer');
+    if (!drawer.classList.contains('open')) toggleCart();
+  }, 300);
+}
+
+/* ── PRODUCT FILTER ──────────────────────────────────────── */
+function filterProducts(btn, condition) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  // Filter cards in the iphones section only
+  const section = document.getElementById('iphones');
+  if (!section) return;
+  section.querySelectorAll('.product-card').forEach(card => {
+    if (condition === 'all') {
+      card.style.display = '';
+    } else if (condition === 'new') {
+      const isUsed = card.querySelector('.card-badge') &&
+        (card.querySelector('.card-badge').style.background === 'rgb(5, 150, 105)' ||
+         card.textContent.includes('вживан') || card.textContent.includes('Вживан'));
+      card.style.display = isUsed ? 'none' : '';
+    } else if (condition === 'used') {
+      const isUsed = card.textContent.includes('вживан') || card.textContent.includes('Вживан');
+      card.style.display = isUsed ? '' : 'none';
+    }
+  });
+}
+
+/* ── TRADE-IN CALCULATOR ─────────────────────────────────── */
+const TRADEIN_PRICES = {
+  'iPhone 17 Pro Max': { perfect: 42000, good: 36000, fair: 28000 },
+  'iPhone 17 Pro':     { perfect: 34000, good: 28000, fair: 22000 },
+  'iPhone 16 Pro Max': { perfect: 28000, good: 22000, fair: 16000 },
+  'iPhone 16 Pro':     { perfect: 22000, good: 17000, fair: 12000 },
+  'iPhone 15 Pro Max': { perfect: 20000, good: 15000, fair: 10000 },
+  'iPhone 15 Pro':     { perfect: 16000, good: 12000, fair: 8000  },
+  'iPhone 14 Pro Max': { perfect: 14000, good: 10000, fair: 6500  },
+  'iPhone 14 Pro':     { perfect: 11000, good: 8000,  fair: 5000  },
+  'iPhone 13 Pro Max': { perfect: 9000,  good: 6500,  fair: 4000  },
+  'iPhone 13 Pro':     { perfect: 7500,  good: 5500,  fair: 3500  },
+  'iPhone 13':         { perfect: 5500,  good: 4000,  fair: 2500  },
+  'iPhone 12':         { perfect: 4000,  good: 2800,  fair: 1800  },
+};
+
+let tiSelectedModel = '';
+let tiSelectedCond  = '';
+
+function tiSelectModel(sel) {
+  tiSelectedModel = sel.value;
+  tiSelectedCond  = '';
+  document.querySelectorAll('.cond-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tradeinResult').classList.remove('show');
+}
+
+function tiSelectCond(btn, cond) {
+  tiSelectedCond = cond;
+  document.querySelectorAll('.cond-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  calcTradeIn();
+}
+
+function calcTradeIn() {
+  if (!tiSelectedModel || !tiSelectedCond) return;
+  const prices = TRADEIN_PRICES[tiSelectedModel];
+  if (!prices) return;
+  const price  = prices[tiSelectedCond];
+  const result = document.getElementById('tradeinResult');
+  document.getElementById('tradeinPrice').textContent = price.toLocaleString('uk-UA') + ' ₴';
+  result.classList.add('show');
+}
+
+/* ── STICKY TG BUTTON ────────────────────────────────────── */
+const stickyTg = document.getElementById('stickyTg');
+window.addEventListener('scroll', () => {
+  stickyTg.classList.toggle('visible', window.scrollY > 400);
+}, { passive: true });
+
+/* ── PARTICLE CANVAS ─────────────────────────────────────── */
+(function() {
+  const canvas = document.getElementById('particle-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function Particle() {
+    this.x = Math.random()*W; this.y = Math.random()*H;
+    this.vx = (Math.random()-0.5)*0.4; this.vy = (Math.random()-0.5)*0.4;
+    this.r = Math.random()*1.5+0.3; this.alpha = Math.random()*0.5+0.1;
+    this.pulse = Math.random()*Math.PI*2;
+  }
+  for (let i = 0; i < 90; i++) particles.push(new Particle());
+
+  let mouseX = W/2, mouseY = H/2;
+  window.addEventListener('mousemove', e => { mouseX=e.clientX; mouseY=e.clientY; });
+
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    particles.forEach(p => {
+      p.x+=p.vx; p.y+=p.vy; p.pulse+=0.02;
+      if(p.x<0)p.x=W; if(p.x>W)p.x=0; if(p.y<0)p.y=H; if(p.y>H)p.y=0;
+      const a = p.alpha*(0.6+0.4*Math.sin(p.pulse));
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(1,119,237,${a})`; ctx.fill();
+    });
+    particles.forEach((a,i) => {
+      particles.slice(i+1).forEach(b => {
+        const dx=a.x-b.x, dy=a.y-b.y, dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<110){
+          const mdx=(a.x+b.x)/2-mouseX, mdy=(a.y+b.y)/2-mouseY;
+          const mDist=Math.sqrt(mdx*mdx+mdy*mdy);
+          if(mDist<220){
+            ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
+            ctx.strokeStyle=`rgba(1,119,237,${(1-dist/110)*0.18*(1-mDist/220)})`;
+            ctx.lineWidth=0.5; ctx.stroke();
+          }
+        }
+      });
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── CURSOR GLOW ─────────────────────────────────────────── */
+(function() {
+  const glow = document.getElementById('cursor-glow');
+  if (!glow) return;
+  let cx=0, cy=0, tx=0, ty=0;
+  window.addEventListener('mousemove', e => { tx=e.clientX; ty=e.clientY; });
+  function animate() { cx+=(tx-cx)*0.1; cy+=(ty-cy)*0.1; glow.style.left=cx+'px'; glow.style.top=cy+'px'; requestAnimationFrame(animate); }
+  animate();
+})();
+
+/* ── SCROLL REVEAL ───────────────────────────────────────── */
+(function() {
+  const targets = document.querySelectorAll('.product-card,.perk,.service-card,.why-card,.stat,.section-header,.review-card');
+  targets.forEach(el => el.classList.add('reveal'));
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  targets.forEach(el => obs.observe(el));
+})();
+
+/* ── ANIMATED COUNTERS ───────────────────────────────────── */
+(function() {
+  const counters = document.querySelectorAll('.stat-num');
+  const data = [
+    { target:11,   suffix:'',    raw:true  },
+    { target:4192, suffix:'+',   raw:false },
+    { target:495,  suffix:'',    raw:false },
+    { target:0,    suffix:'%',   raw:true  },
+  ];
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(!entry.isIntersecting) return;
+      const el  = entry.target;
+      const idx = Array.from(counters).indexOf(el);
+      const d   = data[idx];
+      if(!d) return;
+      const dur = 1800, startTime = performance.now();
+      function tick(now) {
+        const p = Math.min((now-startTime)/dur,1);
+        const eased = 1-Math.pow(1-p,3);
+        const val = Math.round(d.target*eased);
+        el.textContent = (val>=1000 && !d.raw ? (val/1000).toFixed(1)+'K' : val) + d.suffix;
+        if(p<1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      obs.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => obs.observe(c));
+})();
+
+/* ── SMOOTH SCROLL ───────────────────────────────────────── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href').slice(1);
+    if(!id) return;
+    const el = document.getElementById(id);
+    if(el){ e.preventDefault(); el.scrollIntoView({ behavior:'smooth', block:'start' }); }
+  });
+});
+
+/* ── HEADER AUTO-HIDE ────────────────────────────────────── */
+(function() {
+  let lastY = 0;
+  const hdr = document.querySelector('header');
+  hdr.style.transition = 'transform 0.3s cubic-bezier(0.22,1,0.36,1)';
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    hdr.style.transform = (y > lastY && y > 80) ? 'translateY(-100%)' : 'translateY(0)';
+    lastY = y;
+  }, { passive:true });
+})();
+
+/* ── CARD TILT ───────────────────────────────────────────── */
+document.querySelectorAll('.product-card').forEach(card => {
+  card.setAttribute('tabindex', '0');
+  card.setAttribute('role', 'button');
+  card.addEventListener('click', e => {
+    if (e.target.closest('button, a')) return;
+    card.querySelector('.card-btn')?.click();
+  });
+  card.addEventListener('keydown', e => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    e.preventDefault();
+    card.querySelector('.card-btn')?.click();
+  });
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const rx = ((e.clientY-r.top)/r.height-0.5)*-10;
+    const ry = ((e.clientX-r.left)/r.width-0.5)*10;
+    card.style.transform = `perspective(600px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+  });
+  card.addEventListener('mouseleave', () => { card.style.transform=''; });
+});
+
+loadCart();
+renderCart();
+updateCartBadge();
+</script>
+</body>
+</html>
