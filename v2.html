@@ -1,0 +1,305 @@
+
+<style>
+  .az-root *{box-sizing:border-box;margin:0;padding:0}
+  .az-root{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
+    background:#0a0a0a;color:#fff;border-radius:12px;overflow:hidden;
+  }
+  .az-nav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid rgba(255,255,255,0.07);background:#0a0a0a;position:sticky;top:0;z-index:10;gap:12px}
+  .az-logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+  .az-logo-icon{width:34px;height:34px;background:#e63946;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px}
+  .az-logo-name{font-size:14px;font-weight:700;color:#fff;display:block}
+  .az-logo-sub{font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:.5px;text-transform:uppercase;display:block;margin-top:1px}
+  .az-nav-links{display:flex;gap:18px;list-style:none;flex-wrap:wrap}
+  .az-nav-links a{font-size:13px;color:rgba(255,255,255,0.5);text-decoration:none}
+  .az-nav-links a:hover{color:#fff}
+  .az-nav-right{display:flex;gap:8px;flex-shrink:0}
+  .az-btn-ghost{font-size:12px;padding:7px 13px;border:1px solid rgba(255,255,255,0.12);border-radius:6px;color:rgba(255,255,255,0.65);background:transparent;cursor:pointer;font-family:inherit}
+  .az-btn-red{font-size:12px;padding:7px 13px;border:none;border-radius:6px;background:#e63946;color:#fff;cursor:pointer;font-weight:600;font-family:inherit}
+
+  .az-hero{padding:52px 24px 44px;text-align:center}
+  .az-hero-badge{display:inline-block;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#e63946;border:1px solid rgba(230,57,70,0.3);border-radius:20px;padding:4px 14px;margin-bottom:20px}
+  .az-hero h1{font-size:clamp(26px,4.5vw,46px);font-weight:800;line-height:1.1;letter-spacing:-1px;margin:0 0 16px;color:#fff}
+  .az-hero h1 span{color:#e63946}
+  .az-hero-sub{font-size:14px;color:rgba(255,255,255,0.4);max-width:400px;margin:0 auto 28px;line-height:1.65}
+  .az-hero-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:36px}
+  .az-btn-primary{font-size:14px;font-weight:600;padding:12px 22px;background:#e63946;color:#fff;border:none;border-radius:8px;cursor:pointer;font-family:inherit}
+  .az-btn-outline{font-size:14px;font-weight:500;padding:12px 22px;background:transparent;color:rgba(255,255,255,0.65);border:1px solid rgba(255,255,255,0.12);border-radius:8px;cursor:pointer;font-family:inherit}
+  .az-trust-row{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
+  .az-trust-item{display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.35)}
+  .az-trust-dot{width:5px;height:5px;border-radius:50%;background:#e63946;flex-shrink:0}
+
+  .az-stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06)}
+  .az-stat{padding:18px 12px;text-align:center;border-right:1px solid rgba(255,255,255,0.06)}
+  .az-stat:last-child{border-right:none}
+  .az-stat-num{font-size:22px;font-weight:800;color:#fff;letter-spacing:-.5px;display:block}
+  .az-stat-lbl{font-size:10px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:.5px;display:block;margin-top:3px}
+  .az-stat-green{font-size:20px;font-weight:800;color:#10b981;display:block}
+
+  .az-cats{display:flex;gap:8px;flex-wrap:wrap;padding:24px 24px 0}
+  .az-cat{padding:6px 14px;border:1px solid rgba(255,255,255,0.08);border-radius:20px;font-size:12px;color:rgba(255,255,255,0.55);cursor:pointer;background:rgba(255,255,255,0.02);font-family:inherit;transition:all .15s}
+  .az-cat.active{border-color:#e63946;color:#fff;background:rgba(230,57,70,0.1)}
+
+  .az-section{padding:28px 24px}
+  .az-section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px}
+  .az-section-title{font-size:17px;font-weight:700;color:#fff;letter-spacing:-.2px}
+  .az-section-link{font-size:12px;color:#e63946;text-decoration:none;font-weight:500}
+
+  .az-products{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px}
+  .az-card{background:#111;border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:14px;cursor:pointer;transition:border-color .2s;position:relative}
+  .az-card:hover{border-color:rgba(230,57,70,0.4)}
+  .az-card-badge{position:absolute;top:10px;left:10px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:3px 7px;border-radius:4px}
+  .az-card-badge.used{background:rgba(230,57,70,0.12);color:#e63946}
+  .az-card-badge.new2{background:rgba(16,185,129,0.12);color:#10b981}
+  .az-card-img{width:100%;height:90px;border-radius:8px;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:12px}
+  .az-card-model{font-size:10px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+  .az-card-name{font-size:13px;font-weight:600;color:#fff;margin-bottom:6px;line-height:1.3}
+  .az-card-spec{font-size:10px;color:rgba(255,255,255,0.22);margin-bottom:10px;line-height:1.4}
+  .az-card-price{font-size:14px;font-weight:800;color:#e63946;letter-spacing:-.2px}
+  .az-card-price-old{font-size:11px;color:rgba(255,255,255,0.18);text-decoration:line-through;margin-left:5px}
+
+  .az-services{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:0}
+  .az-service{background:#111;border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:18px 14px;text-align:center}
+  .az-service-icon{font-size:26px;margin-bottom:8px;display:block}
+  .az-service-name{font-size:13px;font-weight:600;color:#fff;margin-bottom:4px}
+  .az-service-desc{font-size:11px;color:rgba(255,255,255,0.3);line-height:1.4}
+
+  .az-why{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .az-why-item{display:flex;gap:10px;align-items:flex-start;padding:14px;background:#111;border:1px solid rgba(255,255,255,0.05);border-radius:10px}
+  .az-why-icon{width:30px;height:30px;background:rgba(230,57,70,0.1);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+  .az-why-text h4{font-size:12px;font-weight:600;color:#fff;margin-bottom:3px}
+  .az-why-text p{font-size:11px;color:rgba(255,255,255,0.3);line-height:1.4}
+
+  .az-cta-banner{margin:0 24px 32px;background:#e63946;border-radius:14px;padding:28px 22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+  .az-cta-banner h2{font-size:18px;font-weight:800;color:#fff;margin-bottom:4px;letter-spacing:-.2px}
+  .az-cta-banner p{font-size:13px;color:rgba(255,255,255,0.78)}
+  .az-btn-white{font-size:13px;font-weight:700;padding:11px 18px;background:#fff;color:#e63946;border:none;border-radius:8px;cursor:pointer;font-family:inherit;white-space:nowrap}
+
+  .az-footer{border-top:1px solid rgba(255,255,255,0.06);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  .az-footer-logo{font-size:13px;font-weight:700;color:rgba(255,255,255,0.45)}
+  .az-footer-links{display:flex;gap:16px;flex-wrap:wrap}
+  .az-footer-links a{font-size:11px;color:rgba(255,255,255,0.28);text-decoration:none}
+  .az-footer-phone{font-size:12px;font-weight:600;color:rgba(255,255,255,0.55)}
+</style>
+
+<div class="az-root">
+
+  <nav class="az-nav">
+    <div class="az-logo">
+      <div class="az-logo-icon">&#127817;</div>
+      <div>
+        <span class="az-logo-name">Arbuz Store</span>
+        <span class="az-logo-sub">&#1043;&#1072;&#1076;&#1078;&#1077;&#1090;&#1080; &#1090;&#1072; &#1072;&#1082;&#1089;&#1077;&#1089;&#1091;&#1072;&#1088;&#1080;</span>
+      </div>
+    </div>
+    <ul class="az-nav-links">
+      <li><a href="#">iPhone</a></li>
+      <li><a href="#">iPad</a></li>
+      <li><a href="#">MacBook</a></li>
+      <li><a href="#">&#1040;&#1082;&#1089;&#1077;&#1089;&#1091;&#1072;&#1088;&#1080;</a></li>
+      <li><a href="#">&#1056;&#1077;&#1084;&#1086;&#1085;&#1090;</a></li>
+    </ul>
+    <div class="az-nav-right">
+      <button class="az-btn-ghost">093-019-31-30</button>
+      <button class="az-btn-red">&#1050;&#1086;&#1096;&#1080;&#1082;</button>
+    </div>
+  </nav>
+
+  <section class="az-hero">
+    <div class="az-hero-badge">&#128308; &#1054;&#1076;&#1077;&#1089;&#1072; &middot; &#1044;&#1086;&#1089;&#1090;&#1072;&#1074;&#1082;&#1072; &#1087;&#1086; &#1074;&#1089;&#1110;&#1081; &#1059;&#1082;&#1088;&#1072;&#1111;&#1085;&#1110;</div>
+    <h1>Apple &#1090;&#1077;&#1093;&#1085;&#1110;&#1082;&#1072;.<br>&#1041;&#1077;&#1079; &#1087;&#1077;&#1088;&#1077;&#1087;&#1083;&#1072;&#1090;.<br>&#1047; <span>&#1075;&#1072;&#1088;&#1072;&#1085;&#1090;&#1110;&#1108;&#1102;.</span></h1>
+    <p class="az-hero-sub">&#1053;&#1086;&#1074;&#1110; &#1090;&#1072; &#1074;&#1078;&#1080;&#1074;&#1072;&#1085;&#1110; iPhone, iPad, MacBook &#8212; &#1086;&#1092;&#1110;&#1094;&#1110;&#1081;&#1085;&#1072; &#1075;&#1072;&#1088;&#1072;&#1085;&#1090;&#1110;&#1103;, &#1086;&#1073;&#1084;&#1110;&#1085; &#1090;&#1072; &#1088;&#1086;&#1079;&#1089;&#1090;&#1088;&#1086;&#1095;&#1082;&#1072;</p>
+    <div class="az-hero-actions">
+      <button class="az-btn-primary">&#1055;&#1077;&#1088;&#1077;&#1075;&#1083;&#1103;&#1085;&#1091;&#1090;&#1080; iPhone &#8594;</button>
+      <button class="az-btn-outline">Trade-In &#1084;&#1086;&#1075;&#1086; &#1087;&#1088;&#1080;&#1089;&#1090;&#1088;&#1086;&#1102;</button>
+    </div>
+    <div class="az-trust-row">
+      <div class="az-trust-item"><div class="az-trust-dot"></div>&#1043;&#1072;&#1088;&#1072;&#1085;&#1090;&#1110;&#1103; 1 &#1088;&#1110;&#1082;</div>
+      <div class="az-trust-item"><div class="az-trust-dot"></div>&#1041;&#1077;&#1079;&#1087;&#1077;&#1095;&#1085;&#1072; &#1091;&#1075;&#1086;&#1076;&#1072;</div>
+      <div class="az-trust-item"><div class="az-trust-dot"></div>&#1055;&#1077;&#1088;&#1077;&#1074;&#1110;&#1088;&#1077;&#1085;&#1080;&#1081; &#1089;&#1090;&#1072;&#1085;</div>
+      <div class="az-trust-item"><div class="az-trust-dot"></div>&#1042;&#1080;&#1075;&#1110;&#1076;&#1085;&#1080;&#1081; &#1086;&#1073;&#1084;&#1110;&#1085;</div>
+    </div>
+  </section>
+
+  <div class="az-stats">
+    <div class="az-stat">
+      <span class="az-stat-num">4 200+</span>
+      <span class="az-stat-lbl">&#1055;&#1110;&#1076;&#1087;&#1080;&#1089;&#1085;&#1080;&#1082;&#1110;&#1074;</span>
+    </div>
+    <div class="az-stat">
+      <span class="az-stat-num">500+</span>
+      <span class="az-stat-lbl">&#1055;&#1091;&#1073;&#1083;&#1110;&#1082;&#1072;&#1094;&#1110;&#1081;</span>
+    </div>
+    <div class="az-stat">
+      <span class="az-stat-green">&#9733; 4.9</span>
+      <span class="az-stat-lbl">&#1042;&#1110;&#1076;&#1075;&#1091;&#1082;&#1080;</span>
+    </div>
+    <div class="az-stat">
+      <span class="az-stat-num">5+</span>
+      <span class="az-stat-lbl">&#1056;&#1086;&#1082;&#1110;&#1074; &#1085;&#1072; &#1088;&#1080;&#1085;&#1082;&#1091;</span>
+    </div>
+  </div>
+
+  <div style="padding:24px 24px 0">
+    <p style="font-size:10px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:.6px">&#1050;&#1072;&#1090;&#1072;&#1083;&#1086;&#1075;</p>
+  </div>
+  <div class="az-cats">
+    <button class="az-cat active">&#1059;&#1089;&#1110;</button>
+    <button class="az-cat">iPhone 17</button>
+    <button class="az-cat">iPhone 16</button>
+    <button class="az-cat">iPhone 15</button>
+    <button class="az-cat">iPad</button>
+    <button class="az-cat">MacBook</button>
+    <button class="az-cat">AirPods</button>
+    <button class="az-cat">&#1040;&#1082;&#1089;&#1077;&#1089;&#1091;&#1072;&#1088;&#1080;</button>
+  </div>
+
+  <section class="az-section">
+    <div class="az-section-head">
+      <h2 class="az-section-title">&#1055;&#1086;&#1087;&#1091;&#1083;&#1103;&#1088;&#1085;&#1110; &#1087;&#1088;&#1080;&#1089;&#1090;&#1088;&#1086;&#1111;</h2>
+      <a class="az-section-link" href="#">&#1042;&#1089;&#1110; &#8594;</a>
+    </div>
+    <div class="az-products">
+
+      <div class="az-card">
+        <div class="az-card-badge new2">&#1053;&#1086;&#1074;&#1080;&#1081;</div>
+        <div class="az-card-img">&#128241;</div>
+        <div class="az-card-model">APPLE</div>
+        <div class="az-card-name">iPhone 17 Pro Max</div>
+        <div class="az-card-spec">256GB &middot; USB-C &middot; Titanium</div>
+        <div><span class="az-card-price">&#1074;&#1110;&#1076; 58 990 &#8372;</span></div>
+      </div>
+
+      <div class="az-card">
+        <div class="az-card-badge used">&#1042;&#1078;&#1080;&#1074;&#1072;&#1085;&#1080;&#1081;</div>
+        <div class="az-card-img">&#128241;</div>
+        <div class="az-card-model">APPLE</div>
+        <div class="az-card-name">iPhone 16 Pro</div>
+        <div class="az-card-spec">256GB &middot; USB-C &middot; Desert Titanium</div>
+        <div><span class="az-card-price">&#1074;&#1110;&#1076; 41 990 &#8372;</span><span class="az-card-price-old">47 000 &#8372;</span></div>
+      </div>
+
+      <div class="az-card">
+        <div class="az-card-badge used">&#1042;&#1078;&#1080;&#1074;&#1072;&#1085;&#1080;&#1081;</div>
+        <div class="az-card-img">&#128241;</div>
+        <div class="az-card-model">APPLE</div>
+        <div class="az-card-name">iPhone 15 Pro Max</div>
+        <div class="az-card-spec">256GB &middot; USB-C &middot; Natura Titanium</div>
+        <div><span class="az-card-price">&#1074;&#1110;&#1076; 35 000 &#8372;</span></div>
+      </div>
+
+      <div class="az-card">
+        <div class="az-card-badge used">&#1042;&#1078;&#1080;&#1074;&#1072;&#1085;&#1080;&#1081;</div>
+        <div class="az-card-img">&#128241;</div>
+        <div class="az-card-model">APPLE</div>
+        <div class="az-card-name">iPhone 14 Pro Max</div>
+        <div class="az-card-spec">128GB &middot; USB-C &middot; Deep Purple</div>
+        <div><span class="az-card-price">&#1074;&#1110;&#1076; 24 000 &#8372;</span></div>
+      </div>
+
+      <div class="az-card">
+        <div class="az-card-badge new2">&#1053;&#1086;&#1074;&#1080;&#1081;</div>
+        <div class="az-card-img">&#128187;</div>
+        <div class="az-card-model">APPLE</div>
+        <div class="az-card-name">iPad Air 11&quot; M4</div>
+        <div class="az-card-spec">256GB &middot; Wi-Fi + LTE &middot; Space Gray</div>
+        <div><span class="az-card-price">&#1074;&#1110;&#1076; 40 600 &#8372;</span></div>
+      </div>
+
+      <div class="az-card">
+        <div class="az-card-badge used">&#1042;&#1078;&#1080;&#1074;&#1072;&#1085;&#1080;&#1081;</div>
+        <div class="az-card-img">&#127911;</div>
+        <div class="az-card-model">APPLE</div>
+        <div class="az-card-name">AirPods Pro 2</div>
+        <div class="az-card-spec">MagSafe &middot; USB-C &middot; White</div>
+        <div><span class="az-card-price">&#1074;&#1110;&#1076; 5 200 &#8372;</span><span class="az-card-price-old">7 500 &#8372;</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="az-section" style="padding-top:0">
+    <div class="az-section-head">
+      <h2 class="az-section-title">&#1053;&#1072;&#1096;&#1110; &#1087;&#1086;&#1089;&#1083;&#1091;&#1075;&#1080;</h2>
+    </div>
+    <div class="az-services">
+      <div class="az-service">
+        <span class="az-service-icon">&#128295;</span>
+        <div class="az-service-name">&#1056;&#1077;&#1084;&#1086;&#1085;&#1090;</div>
+        <div class="az-service-desc">&#1064;&#1074;&#1080;&#1076;&#1082;&#1086;, &#1075;&#1072;&#1088;&#1072;&#1085;&#1090;&#1110;&#1103; &#1085;&#1072; &#1088;&#1086;&#1073;&#1086;&#1090;&#1080;</div>
+      </div>
+      <div class="az-service">
+        <span class="az-service-icon">&#128260;</span>
+        <div class="az-service-name">Trade-In</div>
+        <div class="az-service-desc">&#1047;&#1076;&#1072;&#1081; &#1089;&#1090;&#1072;&#1088;&#1080;&#1081; &#8212; &#1086;&#1090;&#1088;&#1080;&#1084;&#1072;&#1081; &#1079;&#1085;&#1080;&#1078;&#1082;&#1091;</div>
+      </div>
+      <div class="az-service">
+        <span class="az-service-icon">&#128179;</span>
+        <div class="az-service-name">&#1056;&#1086;&#1079;&#1089;&#1090;&#1088;&#1086;&#1095;&#1082;&#1072;</div>
+        <div class="az-service-desc">0% &#1074;&#1110;&#1076; 3 &#1076;&#1086; 12 &#1084;&#1110;&#1089;&#1103;&#1094;&#1110;&#1074;</div>
+      </div>
+      <div class="az-service">
+        <span class="az-service-icon">&#128666;</span>
+        <div class="az-service-name">&#1044;&#1086;&#1089;&#1090;&#1072;&#1074;&#1082;&#1072;</div>
+        <div class="az-service-desc">&#1053;&#1086;&#1074;&#1072; &#1055;&#1086;&#1096;&#1090;&#1072; &#1087;&#1086; &#1074;&#1089;&#1110;&#1081; &#1059;&#1082;&#1088;&#1072;&#1111;&#1085;&#1110;</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="az-section" style="padding-top:0">
+    <div class="az-section-head">
+      <h2 class="az-section-title">&#1063;&#1086;&#1084;&#1091; &#1086;&#1073;&#1080;&#1088;&#1072;&#1102;&#1090;&#1100; &#1085;&#1072;&#1089;</h2>
+    </div>
+    <div class="az-why">
+      <div class="az-why-item">
+        <div class="az-why-icon">&#127822;</div>
+        <div class="az-why-text">
+          <h4>&#1043;&#1072;&#1088;&#1072;&#1085;&#1090;&#1110;&#1103; &#1085;&#1072; &#1074;&#1089;&#1077;</h4>
+          <p>&#1050;&#1086;&#1078;&#1077;&#1085; &#1087;&#1088;&#1080;&#1089;&#1090;&#1088;&#1110;&#1081; &#1087;&#1077;&#1088;&#1077;&#1074;&#1110;&#1088;&#1077;&#1085;&#1080;&#1081; &#1090;&#1072; &#1084;&#1072;&#1108; &#1075;&#1072;&#1088;&#1072;&#1085;&#1090;&#1110;&#1102; &#1084;&#1072;&#1075;&#1072;&#1079;&#1080;&#1085;&#1091;</p>
+        </div>
+      </div>
+      <div class="az-why-item">
+        <div class="az-why-icon">&#128176;</div>
+        <div class="az-why-text">
+          <h4>&#1041;&#1077;&#1079; &#1087;&#1077;&#1088;&#1077;&#1087;&#1083;&#1072;&#1090;</h4>
+          <p>&#1062;&#1110;&#1085;&#1080; &#1085;&#1080;&#1078;&#1095;&#1110; &#1079;&#1072; &#1088;&#1080;&#1085;&#1086;&#1082; &#1073;&#1077;&#1079; &#1087;&#1088;&#1080;&#1093;&#1086;&#1074;&#1072;&#1085;&#1080;&#1093; &#1082;&#1086;&#1084;&#1110;&#1089;&#1110;&#1081;</p>
+        </div>
+      </div>
+      <div class="az-why-item">
+        <div class="az-why-icon">&#128737;</div>
+        <div class="az-why-text">
+          <h4>&#1041;&#1077;&#1079;&#1087;&#1077;&#1095;&#1085;&#1072; &#1091;&#1075;&#1086;&#1076;&#1072;</h4>
+          <p>&#1060;&#1110;&#1079;&#1080;&#1095;&#1085;&#1080;&#1081; &#1084;&#1072;&#1075;&#1072;&#1079;&#1080;&#1085; &#1074; &#1054;&#1076;&#1077;&#1089;&#1110;, &#1095;&#1077;&#1082; &#1090;&#1072; &#1076;&#1086;&#1075;&#1086;&#1074;&#1110;&#1088;</p>
+        </div>
+      </div>
+      <div class="az-why-item">
+        <div class="az-why-icon">&#9889;</div>
+        <div class="az-why-text">
+          <h4>&#1064;&#1074;&#1080;&#1076;&#1082;&#1086;</h4>
+          <p>&#1042;&#1110;&#1076;&#1087;&#1086;&#1074;&#1110;&#1076;&#1100; &#1074; Instagram &#1090;&#1072; Telegram &#1079;&#1072; 5 &#1093;&#1074;&#1080;&#1083;&#1080;&#1085;</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="az-cta-banner">
+    <div>
+      <h2>&#1053;&#1077; &#1079;&#1085;&#1072;&#1108;&#1096; &#1097;&#1086; &#1086;&#1073;&#1088;&#1072;&#1090;&#1080;?</h2>
+      <p>&#1055;&#1110;&#1076;&#1073;&#1077;&#1088;&#1077;&#1084;&#1086; &#1110;&#1076;&#1077;&#1072;&#1083;&#1100;&#1085;&#1080;&#1081; iPhone &#1087;&#1110;&#1076; &#1090;&#1074;&#1110;&#1081; &#1073;&#1102;&#1076;&#1078;&#1077;&#1090; &#1079;&#1072; 5 &#1093;&#1074;&#1080;&#1083;&#1080;&#1085;</p>
+    </div>
+    <button class="az-btn-white">&#1053;&#1072;&#1087;&#1080;&#1089;&#1072;&#1090;&#1080; &#1074; Telegram &#8594;</button>
+  </div>
+
+  <footer class="az-footer">
+    <span class="az-footer-logo">&#127817; Arbuz Store</span>
+    <div class="az-footer-links">
+      <a href="#">Instagram</a>
+      <a href="#">Telegram</a>
+      <a href="#">&#1042;&#1110;&#1076;&#1075;&#1091;&#1082;&#1080;</a>
+      <a href="#">&#1056;&#1077;&#1084;&#1086;&#1085;&#1090;</a>
+      <a href="#">&#1050;&#1086;&#1085;&#1090;&#1072;&#1082;&#1090;&#1080;</a>
+    </div>
+    <span class="az-footer-phone">093-019-31-30</span>
+  </footer>
+
+</div>
